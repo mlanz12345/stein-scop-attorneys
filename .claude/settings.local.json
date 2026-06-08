@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.steinscop.com)",
+      "Bash(npx tsc *)",
+      "Bash(grep -E \"\\\\.\\(jpg|jpeg|png|webp\\)$\")",
+      "Read(//Users/maurizio/Downloads/**)",
+      "Bash(grep -iE \"\\\\.\\(jpg|jpeg|png|webp|gif\\)$\")",
+      "Bash(npm install *)",
+      "Bash(echo \"EXIT: $?\")"
+    ]
+  }
+}
