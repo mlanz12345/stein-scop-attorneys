@@ -61,7 +61,7 @@ function MemberCard({ member, index }: { member: TeamMember; index: number; key?
         {member.practiceAreas.slice(0, 2).map((area) => (
           <span
             key={area}
-            className="px-2.5 py-1 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap"
+            className="px-2.5 py-1 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-wider rounded-full text-center leading-normal"
           >
             {area}
           </span>
@@ -153,7 +153,7 @@ export default function TeamPage() {
       </Helmet>
       
       {/* Hero section */}
-      <section className="pb-12 px-12 lg:px-24 bg-brand-cream">
+      <section className="pb-12 px-6 md:px-12 lg:px-24 bg-brand-cream">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div
@@ -178,7 +178,7 @@ export default function TeamPage() {
 
       {/* Grid section */}
       <section className="bg-white border-t border-brand-border py-14 lg:py-24">
-        <div className="max-w-7xl mx-auto px-12 lg:px-24">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           {/* Search bar */}
           <div className="relative max-w-md mb-12">
             <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brand-primary/45">
@@ -203,7 +203,7 @@ export default function TeamPage() {
 
           {/* Sticky Sub-Navigation */}
           {!searchQuery && (
-            <div className="sticky top-[72px] z-30 bg-white/95 backdrop-blur-sm border-b border-brand-border/60 py-4 mb-12 -mx-12 px-12 lg:-mx-24 lg:px-24 flex gap-6 overflow-x-auto no-scrollbar select-none">
+            <div className="sticky top-[72px] z-30 bg-white/95 backdrop-blur-sm border-b border-brand-border/60 py-4 mb-12 -mx-6 px-6 md:-mx-12 md:px-12 lg:-mx-24 lg:px-24 flex gap-6 overflow-x-auto no-scrollbar select-none">
               {teamSections.map((sec) => {
                 const hasMembers = sec.data.length > 0;
                 if (!hasMembers) return null;
@@ -234,7 +234,7 @@ export default function TeamPage() {
                   <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Directors
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredDirectors.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
                     ))}
@@ -248,7 +248,7 @@ export default function TeamPage() {
                   <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Consultants
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredConsultants.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
                     ))}
@@ -262,7 +262,7 @@ export default function TeamPage() {
                   <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Senior Associates
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredSeniorAssociates.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
                     ))}
@@ -276,7 +276,7 @@ export default function TeamPage() {
                   <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Associates
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredAssociates.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
                     ))}
@@ -290,7 +290,7 @@ export default function TeamPage() {
                   <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Candidate Attorneys
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredCandidateAttorneys.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
                     ))}
@@ -304,7 +304,7 @@ export default function TeamPage() {
                   <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Management
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredManagement.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
                     ))}
