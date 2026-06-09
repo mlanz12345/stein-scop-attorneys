@@ -14,6 +14,13 @@
 
   --color-brand-navy: #0a0f1a;
   --color-brand-gold: #c5a67c;
+
+  --animate-sheen: sheen 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes sheen {
+    0% { transform: translateX(-150%) skewX(-15deg); }
+    100% { transform: translateX(250%) skewX(-15deg); }
+  }
 }
 
 @layer utilities {

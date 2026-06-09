@@ -129,50 +129,56 @@ export default function Results() {
           </AnimatePresence>
         </div>
 
-        {/* Right — scrollable records */}
-        <div
-          ref={scrollRef}
-          className="w-full lg:w-[62%] overflow-y-auto no-scrollbar"
-        >
-          {cases.map((item, i) => (
-            <div
-              key={item.id}
-              ref={(el) => { itemRefs.current[i] = el; }}
-              className="py-14 border-t border-white/[0.08] first:border-t-0"
-            >
-              {/* Mobile index */}
-              <span className="block lg:hidden text-white/20 text-sm font-light tracking-widest mb-5">
-                {String(i + 1).padStart(2, '0')} / {String(cases.length).padStart(2, '0')}
-              </span>
+        {/* Right — scrollable records with fade mask */}
+        <div className="w-full lg:w-[62%] relative h-full flex flex-col">
+          {/* Subtle edge fades for smooth entry/exit */}
+          <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
 
-              {/* Tag + outcome */}
-              <div className="flex items-center gap-3 mb-5">
-                <span className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-medium">
-                  {item.tag}
-                </span>
-                <span className="w-px h-3 bg-white/15" />
-                <span className="text-[9px] uppercase tracking-[0.25em] text-brand-accent font-medium">
-                  {item.outcome}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h3
-                className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight"
-                style={{ letterSpacing: '-0.02em' }}
+          <div
+            ref={scrollRef}
+            className="overflow-y-auto no-scrollbar h-full flex-1"
+          >
+            {cases.map((item, i) => (
+              <div
+                key={item.id}
+                ref={(el) => { itemRefs.current[i] = el; }}
+                className="py-14 px-6 -mx-6 rounded-xl border-t border-white/[0.08] first:border-t-0 hover:bg-white/[0.02] transition-all duration-500 group/case"
               >
-                <Editable id={`result_title_${item.id}`} defaultText={item.title} />
-              </h3>
+                {/* Mobile index */}
+                <span className="block lg:hidden text-white/20 text-sm font-light tracking-widest mb-5">
+                  {String(i + 1).padStart(2, '0')} / {String(cases.length).padStart(2, '0')}
+                </span>
 
-              {/* Description */}
-              <p className="text-sm text-white/40 font-light max-w-lg" style={{ lineHeight: 1.75 }}>
-                <Editable id={`result_desc_${item.id}`} defaultText={item.desc} />
-              </p>
-            </div>
-          ))}
+                {/* Tag + outcome */}
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-medium group-hover/case:text-white/50 transition-colors duration-300">
+                    {item.tag}
+                  </span>
+                  <span className="w-px h-3 bg-white/15" />
+                  <span className="text-[9px] uppercase tracking-[0.25em] text-brand-accent font-medium">
+                    {item.outcome}
+                  </span>
+                </div>
 
-          {/* Spacer so the last item can scroll past the trigger */}
-          <div className="h-[40vh]" />
+                {/* Title */}
+                <h3
+                  className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight group-hover/case:text-brand-accent group-hover/case:translate-x-1 transition-all duration-300"
+                  style={{ letterSpacing: '-0.02em' }}
+                >
+                  <Editable id={`result_title_${item.id}`} defaultText={item.title} />
+                </h3>
+
+                {/* Description */}
+                <p className="text-sm text-white/40 font-light max-w-lg group-hover/case:text-white/60 transition-colors duration-300" style={{ lineHeight: 1.75 }}>
+                  <Editable id={`result_desc_${item.id}`} defaultText={item.desc} />
+                </p>
+              </div>
+            ))}
+
+            {/* Spacer so the last item can scroll past the trigger */}
+            <div className="h-[40vh]" />
+          </div>
         </div>
       </div>
     </section>

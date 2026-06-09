@@ -97,7 +97,7 @@ export default function TeamMemberPage() {
       </section>
 
       {/* ── Bio ─────────────────────────────────────────────────────── */}
-      <section className="bg-brand-cream py-24 px-8 md:px-24 flex flex-col md:flex-row gap-12 flex-grow">
+      <section className="bg-white border-t border-brand-border py-24 px-8 md:px-24 flex flex-col md:flex-row gap-12 flex-grow">
         <div className="w-full md:w-1/4 pt-1">
           <p className="text-brand-accent text-xs tracking-[0.2em] font-semibold uppercase sticky top-28">
             Profile

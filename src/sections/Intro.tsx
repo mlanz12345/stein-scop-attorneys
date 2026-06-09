@@ -42,22 +42,23 @@ export default function Intro() {
           </motion.div>
         </div>
 
-        {/* Right Side: Conference room with Ken Burns animation */}
+        {/* Right Side: Conference room with Ken Burns animation & interactive hover */}
         <motion.div
-          className="lg:col-span-5 relative"
+          className="lg:col-span-5 relative group"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={{ scale: 1.02 }}
         >
-          <div className="aspect-[4/5] overflow-hidden rounded-t-[100px] md:rounded-t-[200px]">
+          <div className="aspect-[4/5] overflow-hidden rounded-t-[100px] md:rounded-t-[200px] shadow-2xl transition-all duration-700 group-hover:shadow-brand-accent/10">
             <img
               src="/chess.png"
               alt="Stein Scop strategic approach"
-              className="w-full h-full object-cover ken-burns"
+              className="w-full h-full object-cover ken-burns transition-all duration-700 group-hover:scale-105"
             />
           </div>
-          <div className="absolute inset-0 border border-brand-primary/10 rounded-t-[100px] md:rounded-t-[200px] pointer-events-none" />
+          <div className="absolute inset-0 border border-brand-primary/10 rounded-t-[100px] md:rounded-t-[200px] pointer-events-none group-hover:border-brand-accent/30 transition-colors duration-500" />
         </motion.div>
       </div>
     </section>

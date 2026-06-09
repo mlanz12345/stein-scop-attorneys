@@ -36,7 +36,7 @@ export default function CareersPage() {
       </section>
 
       {/* Culture Section */}
-      <section className="py-14 px-12 lg:px-24 border-t border-brand-border">
+      <section className="py-14 px-12 lg:px-24 bg-white border-t border-brand-border">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <h2 className="text-4xl font-serif">

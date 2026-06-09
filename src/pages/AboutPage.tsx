@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 
 export default function AboutPage() {
+
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
@@ -61,9 +62,9 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl hover:scale-[1.02] transition-transform duration-700 ease-out">
               <img
-                src="/room.jpg"
+                src="/room.png"
                 alt="Stein Scop conference room"
                 className="w-full h-full object-cover ken-burns"
               />
@@ -111,7 +112,7 @@ export default function AboutPage() {
       </section>
 
       {/* Client Convenience */}
-      <section className="py-16 px-12 lg:px-24 border-t border-brand-border bg-brand-cream">
+      <section className="py-16 px-12 lg:px-24 border-t border-brand-border bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -205,17 +206,17 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-12 lg:px-24 text-center border-t border-brand-border">
+      <section className="py-16 px-12 lg:px-24 text-center bg-brand-primary text-brand-cream border-t border-white/10">
         <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="text-5xl font-serif">
+          <h2 className="text-5xl font-serif text-brand-cream">
             Ready to Work <span className="italic">With Us?</span>
           </h2>
-          <p className="text-brand-primary/60 font-light leading-relaxed">
+          <p className="text-brand-cream/70 font-light leading-relaxed">
             Discover why South Africa's most prominent businesses trust Stein Scop Attorneys with their most sensitive and complex legal matters.
           </p>
           <div className="flex justify-center gap-6 flex-wrap">
             <a href="/practice-areas"
-              className="px-8 py-4 border-2 border-brand-primary text-brand-primary uppercase tracking-widest text-xs font-bold rounded-full hover:bg-brand-primary hover:text-brand-cream transition-all">
+              className="px-8 py-4 border-2 border-brand-cream text-brand-cream uppercase tracking-widest text-xs font-bold rounded-full hover:bg-brand-cream hover:text-brand-primary transition-all">
               Our Practice Areas
             </a>
             <a href="/team"

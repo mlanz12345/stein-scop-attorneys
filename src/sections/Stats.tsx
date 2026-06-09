@@ -42,8 +42,11 @@ export default function Stats() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15, duration: 0.8 }}
-              className="bg-brand-primary p-10 lg:p-16 flex flex-col justify-between gap-8 group"
+              className="bg-brand-primary p-10 lg:p-16 flex flex-col justify-between gap-8 group border border-transparent hover:border-brand-accent/20 hover:bg-white/[0.01] transition-all duration-500 relative overflow-hidden"
             >
+              {/* Glowing base slider expanding on card hover */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-brand-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
               <div className="text-5xl md:text-7xl font-serif text-brand-cream leading-none group-hover:text-brand-accent transition-colors duration-500">
                 <AnimatedNumber value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
               </div>

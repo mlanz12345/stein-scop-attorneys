@@ -9,7 +9,7 @@ def compile_noshadow_loop():
     
     print("Exporting all video frames...")
     subprocess.run([
-        "ffmpeg", "-y", "-i", "video3.mp4",
+        "ffmpeg", "-y", "-i", "videoabt.mp4",
         f"{temp_dir}/frame_%04d.png"
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     
@@ -125,15 +125,13 @@ def compile_noshadow_loop():
         resized_img = cropped_img.resize((200, 200), Image.Resampling.LANCZOS)
         final_frames_all.append(resized_img)
         
-    # Build 360 ping-pong loop sequence
-    # 1. Subsample: drop every 2nd frame to get 12fps animation
-    subsampled = [final_frames_all[i] for i in range(0, len(final_frames_all), 2)]
-    print(f"Subsampled from {len(final_frames_all)} to {len(subsampled)} frames.")
+    # Build continuous 360-degree loop sequence
+    # 1. No subsampling to keep 100% native 24fps fluidity
+    first_half = final_frames_all
+    second_half = [img.transpose(Image.Transpose.FLIP_LEFT_RIGHT) for img in final_frames_all]
     
-    # 2. Ping-pong loop
-    # E.g. [0, 1, 2, 3] -> [0, 1, 2, 3, 2, 1] (total 6 frames)
-    # This prevents duplication of boundary frames 0 and 3.
-    loop_frames = subsampled[:-1] + list(reversed(subsampled))[0:-1]
+    # 2. Seamlessly blend transitions by avoiding boundary frame duplication
+    loop_frames = first_half[:-1] + second_half[:-1]
     print(f"Total loop frames: {len(loop_frames)}")
     
     # Save APNG
@@ -143,7 +141,7 @@ def compile_noshadow_loop():
         apng_path,
         save_all=True,
         append_images=loop_frames[1:],
-        duration=83.33, # 12 fps -> 83.33ms per frame
+        duration=41.67, # 24 fps -> 41.67ms per frame
         loop=0
     )
     print("APNG saved.")
@@ -154,11 +152,11 @@ def compile_noshadow_loop():
     for i, frame in enumerate(loop_frames):
         frame.save(os.path.join(temp_loop_dir, f"frame_{i+1:04d}.png"))
         
-    # Compile WebM using ffmpeg
+    # Compile WebM using ffmpeg at 24 fps
     webm_path = "public/logo-spin-transparent.webm"
     print(f"Compiling transparent WebM loop to {webm_path}...")
     subprocess.run([
-        "ffmpeg", "-y", "-r", "12", "-i", f"{temp_loop_dir}/frame_%04d.png",
+        "ffmpeg", "-y", "-r", "24", "-i", f"{temp_loop_dir}/frame_%04d.png",
         "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p",
         "-b:v", "0", "-crf", "25", webm_path
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

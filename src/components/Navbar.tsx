@@ -55,7 +55,7 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           src="/logo-new.png"
           alt="Stein Scop"
-          fetchpriority="high"
+          fetchPriority="high"
           className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${
             isTransparent ? 'brightness-100' : 'brightness-0'
           }`}

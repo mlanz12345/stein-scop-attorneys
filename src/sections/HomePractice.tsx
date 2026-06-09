@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+
 const practices = [
   {
     id: 'corp_comm',
@@ -31,6 +34,49 @@ const practices = [
   },
 ];
 
+function PracticeCard({ p, i, isLast, nextTitle }: { p: typeof practices[0]; i: number; isLast: boolean; nextTitle?: string }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Track scroll progress of this card relative to the top of the viewport
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Scale down slightly and dim as it gets covered by the next card
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.55]);
+
+  return (
+    <section
+      ref={cardRef}
+      className="sticky top-0 bg-white border-t border-black/15 px-12 lg:px-24 pt-28 pb-20 origin-top"
+      style={{ zIndex: i + 1 }}
+    >
+      <motion.div style={{ scale, opacity }} className="max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-5xl font-serif font-normal text-brand-primary mb-6 leading-tight max-w-2xl">
+          {p.title}
+        </h2>
+        <p className="text-base md:text-lg text-brand-primary/60 font-light leading-relaxed max-w-xl">
+          {p.desc}
+        </p>
+        {isLast ? (
+          <a
+            href="/practice-areas"
+            className="inline-block mt-10 px-8 py-3 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:border-brand-accent hover:text-brand-accent transition-all duration-300"
+          >
+            See All Practice Areas
+          </a>
+        ) : (
+          <p className="mt-8 text-[9px] uppercase tracking-[0.4em] text-brand-primary font-bold">
+            Next — {nextTitle}
+          </p>
+        )}
+      </motion.div>
+    </section>
+  );
+}
+
 export default function HomePractice() {
   return (
     <div>
@@ -51,35 +97,15 @@ export default function HomePractice() {
         </div>
       </div>
 
-      {/* Sticky stack — each card slides over the previous */}
+      {/* Sticky stack — each card slides over the previous with progressive depth transitions */}
       {practices.map((p, i) => (
-        <section
+        <PracticeCard
           key={p.id}
-          className="sticky top-0 bg-white border-t border-black/15 px-12 lg:px-24 pt-10 pb-16"
-          style={{ zIndex: i + 1 }}
-        >
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-serif font-normal text-brand-primary mb-6 leading-tight max-w-2xl">
-              {p.title}
-            </h2>
-            <p className="text-base md:text-lg text-brand-primary/60 font-light leading-relaxed max-w-xl">
-              {p.desc}
-            </p>
-            {i === practices.length - 1 && (
-              <a
-                href="/practice-areas"
-                className="inline-block mt-10 px-8 py-3 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:border-brand-accent hover:text-brand-accent transition-all duration-300"
-              >
-                See All Practice Areas
-              </a>
-            )}
-            {i < practices.length - 1 && (
-              <p className="mt-8 text-[9px] uppercase tracking-[0.4em] text-brand-primary font-bold">
-                Next — {practices[i + 1].title}
-              </p>
-            )}
-          </div>
-        </section>
+          p={p}
+          i={i}
+          isLast={i === practices.length - 1}
+          nextTitle={i < practices.length - 1 ? practices[i + 1].title : undefined}
+        />
       ))}
     </div>
   );

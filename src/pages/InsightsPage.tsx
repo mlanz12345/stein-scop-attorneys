@@ -15,9 +15,9 @@ export default function InsightsPage() {
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
-        <title>Legal Insights | Stein Scop Attorneys Inc.</title>
+        <title>Legal News &amp; Briefings | Stein Scop Attorneys Inc.</title>
         <meta name="description" content="Commercial law insights from Stein Scop Attorneys — covering M&A, employment law, litigation, insolvency, competition, mining, and more across South Africa." />
-        <meta property="og:title" content="Legal Insights | Stein Scop Attorneys Inc." />
+        <meta property="og:title" content="Legal News &amp; Briefings | Stein Scop Attorneys Inc." />
         <meta property="og:description" content="Expert commentary on South African commercial law from the directors of Stein Scop Attorneys Inc." />
       </Helmet>
 
@@ -30,9 +30,9 @@ export default function InsightsPage() {
             transition={{ duration: 1 }}
             className="space-y-6"
           >
-            <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold">Legal Insights</span>
+            <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold">Legal News &amp; Info</span>
             <h1 className="text-6xl md:text-8xl font-serif leading-tight">
-              Thought<br /><span className="italic">Leadership</span>
+              News &amp;<br /><span className="italic">Briefings</span>
             </h1>
             <p className="text-xl font-light text-brand-primary/60 max-w-2xl leading-relaxed">
               Perspectives on commercial law, litigation strategy, and the legal developments shaping South African business.
