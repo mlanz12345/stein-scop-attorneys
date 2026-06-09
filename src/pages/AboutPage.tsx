@@ -66,6 +66,7 @@ export default function AboutPage() {
               <img
                 src="/room.png"
                 alt="Stein Scop conference room"
+                loading="lazy"
                 className="w-full h-full object-cover ken-burns"
               />
             </div>

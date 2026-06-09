@@ -5,9 +5,10 @@ interface VideoBackgroundProps {
   src: string;
   className?: string;
   overlayOpacity?: number;
+  poster?: string;
 }
 
-export default function VideoBackground({ src, className = '', overlayOpacity = 0.5 }: VideoBackgroundProps) {
+export default function VideoBackground({ src, className = '', overlayOpacity = 0.5, poster }: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export default function VideoBackground({ src, className = '', overlayOpacity = 
         muted
         loop
         playsInline
+        poster={poster}
         className="absolute w-full h-full object-cover"
       />
       <div 

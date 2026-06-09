@@ -14,9 +14,9 @@ export default function Hero() {
 
   return (
     <section ref={containerRef} className="relative h-screen flex items-center overflow-hidden bg-brand-primary text-brand-cream">
-      {/* Dynamic Background Video - Requested by User */}
       <VideoBackground 
         src="https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8"
+        poster="https://image.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A/thumbnail.webp?time=0"
         overlayOpacity={0.6}
       />
 

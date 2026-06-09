@@ -13,13 +13,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
           setPhase('reveal');
           setTimeout(() => {
             setPhase('done');
-            setTimeout(onComplete, 800);
-          }, 1200);
+            onComplete();
+          }, 800);
           return 100;
         }
-        return p + Math.random() * 12 + 3;
+        return p + Math.random() * 25 + 15;
       });
-    }, 80);
+    }, 40);
     return () => clearInterval(interval);
   }, [onComplete]);
 
@@ -37,7 +37,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
               <motion.div
                 initial={{ scaleY: 1 }}
                 animate={{ scaleY: 0 }}
-                transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+                transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
                 style={{ originY: 0 }}
                 className="absolute inset-0 bg-brand-accent z-10"
               />
