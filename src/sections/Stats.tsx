@@ -47,7 +47,7 @@ export default function Stats() {
               {/* Glowing base slider expanding on card hover */}
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-brand-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-              <div className="text-5xl md:text-7xl font-serif text-brand-cream leading-none group-hover:text-brand-accent transition-colors duration-500">
+              <div className="text-5xl md:text-7xl font-serif lining-nums text-brand-cream leading-none group-hover:text-brand-accent transition-colors duration-500">
                 <AnimatedNumber value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
               </div>
               <div className="space-y-2">

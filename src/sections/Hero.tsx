@@ -20,7 +20,7 @@ export default function Hero() {
         overlayOpacity={0.6}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-12 lg:px-24">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -30,29 +30,31 @@ export default function Hero() {
             <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent mb-6 block font-bold">
               <Editable id="hero_tag" defaultText="Stein Scop Attorneys Inc" />
             </span>
-            <h1 className="font-serif font-normal leading-[1.05] mb-8" style={{ fontSize: 'clamp(2.8rem, 5.5vw, 4.5rem)' }}>
-              <Editable id="hero_title_main" defaultText="Strategic Commercial" /><br />
-              <span className="italic">
-                <Editable id="hero_title_sub" defaultText="Law Practice" />
+            <h1 className="font-serif font-normal leading-[1.05] mb-8" style={{ fontSize: 'clamp(2.5rem, 5.2vw, 4.2rem)' }}>
+              <Editable id="hero_title_main" defaultText="Commercial Law." /><br />
+              <span className="italic text-brand-accent">
+                <Editable id="hero_title_sub" defaultText="Strategic Precision." />
               </span>
             </h1>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-8 max-w-lg"
           >
-            <p className="text-base leading-relaxed text-brand-cream/70 font-light">
-              <Editable id="hero_desc" defaultText="A unique South African legal practice resolving difficult cases with strategic precision." />
+            <p className="text-base leading-relaxed text-brand-cream/80 font-light">
+              <Editable id="hero_desc" defaultText="A director-led Sandton law firm advising corporate clients on complex transactions, critical disputes, and regulatory mandates." />
             </p>
 
             <a
               href="/practice-areas"
-              className="inline-block w-fit px-10 py-4 border border-white/25 text-white uppercase tracking-[2px] text-[10px] font-bold rounded-full hover:border-brand-accent hover:text-brand-accent transition-all duration-500"
+              className="inline-block w-fit px-10 py-4 border border-white/25 text-white uppercase tracking-[2px] text-[10px] font-bold rounded-full hover:bg-brand-accent hover:border-brand-accent hover:text-white transition-all duration-500 relative overflow-hidden group"
             >
-              Practise Areas
+              {/* Sliding glass reflection sheen effect on hover */}
+              <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-sheen pointer-events-none" />
+              <span className="relative z-10">Practice Areas</span>
             </a>
           </motion.div>
         </div>

@@ -13,7 +13,7 @@ export default function AboutPage() {
       </Helmet>
 
       {/* Hero */}
-      <section className="pt-36 pb-12 px-12 lg:px-24">
+      <section className="pt-36 pb-12 px-6 md:px-12 lg:px-24">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -37,46 +37,62 @@ export default function AboutPage() {
       </section>
 
       {/* Who We Are + Image */}
-      <section className="py-16 px-12 lg:px-24 border-t border-brand-border">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-          <div className="space-y-6 text-base font-light leading-relaxed">
+      <section className="py-16 px-6 md:px-12 lg:px-24 border-t border-brand-border">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mb-12"
+          >
+            <span className="text-[10px] uppercase tracking-[0.3em] text-brand-accent font-bold mb-3 block">
+              Identity & Model
+            </span>
             <h2 className="text-4xl md:text-5xl font-serif text-brand-primary">
               Who We Are
             </h2>
-            <p className="text-brand-primary/80">
-              Founded by Glenn Stein and Bradley Scop — two of South Africa's most recognised commercial attorneys — the firm was established on a straightforward conviction: that clients engaged on complex, high-stakes matters deserve direct access to the most senior legal minds on every aspect of their matter.
-            </p>
-            <p className="text-brand-primary/80">
-              Every mandate at Stein Scop is director-led from instruction to conclusion. This commitment to seniority is not a marketing position — it is the operating model of the firm, and it defines the quality and consistency of our advice across every practice area.
-            </p>
-            <p className="text-brand-primary/80">
-              We work with listed entities, private companies, financial institutions, entrepreneurs, and high-net-worth individuals. The common thread is complexity — matters that demand senior judgment, not process.
-            </p>
-          </div>
-
-          {/* Room image with Ken Burns */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl hover:scale-[1.02] transition-transform duration-700 ease-out">
-              <img
-                src="/room.png"
-                alt="Stein Scop conference room"
-                loading="lazy"
-                className="w-full h-full object-cover ken-burns"
-              />
-            </div>
           </motion.div>
+
+          {/* Grid Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+            <div className="space-y-6 text-base font-light leading-relaxed">
+              <p className="text-brand-primary/85 text-lg leading-relaxed font-normal">
+                Founded by Glenn Stein and Bradley Scop — two of South Africa's most recognised commercial attorneys — the firm was established on a straightforward conviction: that clients engaged on complex, high-stakes matters deserve direct access to the most senior legal minds on every aspect of their matter.
+              </p>
+              <p className="text-brand-primary/80">
+                Every mandate at Stein Scop is director-led from instruction to conclusion. This commitment to seniority is not a marketing position — it is the operating model of the firm, and it defines the quality and consistency of our advice across every practice area.
+              </p>
+              <p className="text-brand-primary/80">
+                We work with listed entities, private companies, financial institutions, entrepreneurs, and high-net-worth individuals. The common thread is complexity — matters that demand senior judgment, not process.
+              </p>
+            </div>
+
+            {/* Room image with Ken Burns */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full h-full flex flex-col"
+            >
+              <div className="w-full h-full min-h-[320px] lg:min-h-0 aspect-[4/3] lg:aspect-auto flex-grow overflow-hidden rounded-2xl hover:scale-[1.01] transition-transform duration-700 ease-out shadow-lg relative">
+                <img
+                  src="/room.png"
+                  alt="Stein Scop conference room"
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover ken-burns"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Where We Operate */}
-      <section className="py-16 px-12 lg:px-24 bg-white border-t border-brand-border">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <section className="py-16 px-6 md:px-12 lg:px-24 bg-white border-t border-brand-border">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-4xl md:text-5xl font-serif mb-8">
               Where We <span className="italic">Operate</span>
@@ -94,7 +110,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
             {[
               { country: 'South Africa', detail: 'Headquartered in Sandton, Johannesburg' },
               { country: 'Nigeria', detail: 'Cross-border advisory and transactions' },
@@ -103,9 +119,15 @@ export default function AboutPage() {
               { country: 'DRC', detail: 'Mining and resources transactions' },
               { country: 'Mozambique', detail: 'Energy and infrastructure advisory' },
             ].map((loc) => (
-              <div key={loc.country} className="border-t border-brand-border pt-4 space-y-1">
-                <p className="text-sm font-bold text-brand-primary">{loc.country}</p>
-                <p className="text-xs text-brand-primary/50 font-light leading-snug">{loc.detail}</p>
+              <div 
+                key={loc.country} 
+                className="bg-brand-cream/35 border border-brand-border/45 hover:border-brand-accent/30 hover:bg-white hover:-translate-y-0.5 rounded-xl p-5 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md"
+              >
+                <div className="flex items-center gap-2.5 mb-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-accent shrink-0 animate-pulse" />
+                  <p className="text-sm font-semibold text-brand-primary tracking-wide">{loc.country}</p>
+                </div>
+                <p className="text-xs text-brand-primary/65 font-light leading-relaxed pl-4">{loc.detail}</p>
               </div>
             ))}
           </div>
@@ -113,7 +135,7 @@ export default function AboutPage() {
       </section>
 
       {/* Client Convenience */}
-      <section className="py-16 px-12 lg:px-24 border-t border-brand-border bg-white">
+      <section className="py-16 px-6 md:px-12 lg:px-24 border-t border-brand-border bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -178,7 +200,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Approach */}
-      <section className="py-16 px-12 lg:px-24 bg-brand-primary text-brand-cream">
+      <section className="py-16 px-6 md:px-12 lg:px-24 bg-brand-primary text-brand-cream">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             <div className="space-y-5">
@@ -207,7 +229,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-12 lg:px-24 text-center bg-brand-primary text-brand-cream border-t border-white/10">
+      <section className="py-16 px-6 md:px-12 lg:px-24 text-center bg-brand-primary text-brand-cream border-t border-white/10">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-5xl font-serif text-brand-cream">
             Ready to Work <span className="italic">With Us?</span>

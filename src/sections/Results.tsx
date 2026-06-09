@@ -163,7 +163,7 @@ export default function Results() {
 
                 {/* Title */}
                 <h3
-                  className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight group-hover/case:text-brand-accent group-hover/case:translate-x-1 transition-all duration-300"
+                  className="text-3xl md:text-4xl font-serif lining-nums text-white mb-4 leading-tight group-hover/case:text-brand-accent group-hover/case:translate-x-1 transition-all duration-300"
                   style={{ letterSpacing: '-0.02em' }}
                 >
                   <Editable id={`result_title_${item.id}`} defaultText={item.title} />

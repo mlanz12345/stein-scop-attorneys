@@ -101,7 +101,7 @@ export default function PracticeAreasPage() {
               <Editable id="practice_hero_tag" defaultText="Specializations" />
             </span>
             <h1 className="text-6xl md:text-8xl font-serif leading-tight italic">
-              <Editable id="practice_hero_title" defaultText="Our Practise" />
+              <Editable id="practice_hero_title" defaultText="Our Practice" />
             </h1>
             <p className="text-xl font-light text-brand-primary/60 max-w-2xl leading-relaxed">
               <Editable id="practice_hero_desc" defaultText="Stein Scop Attorneys Inc. provides end-to-end legal solutions across the entire commercial spectrum, driven by deep market insight." />

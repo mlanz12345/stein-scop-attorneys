@@ -19,7 +19,7 @@ const contactDetails = [
     icon: <PhoneCall size={16} className="text-brand-accent" />,
     label: 'Phone',
     content: (
-      <a href="tel:+27113808080" className="text-lg font-serif hover:text-brand-accent transition-colors">
+      <a href="tel:+27113808080" className="text-lg font-serif lining-nums hover:text-brand-accent transition-colors text-white">
         +27 (0)11 380 80 80
       </a>
     ),
@@ -29,7 +29,7 @@ const contactDetails = [
     label: 'WhatsApp',
     content: (
       <a href="https://wa.me/27113808080" target="_blank" rel="noopener noreferrer"
-        className="text-lg font-serif hover:text-brand-accent transition-colors">
+        className="text-lg font-serif lining-nums hover:text-brand-accent transition-colors text-white">
         +27 (0)11 380 80 80
       </a>
     ),
@@ -39,7 +39,7 @@ const contactDetails = [
     label: 'Email',
     content: (
       <a href="mailto:info@steinscop.com"
-        className="text-lg font-serif hover:text-brand-accent transition-colors">
+        className="text-lg font-serif hover:text-brand-accent transition-colors text-white">
         info@steinscop.com
       </a>
     ),
@@ -49,7 +49,7 @@ const contactDetails = [
     label: 'Virtual Meeting',
     content: (
       <a href="mailto:info@steinscop.com?subject=Virtual%20Consultation%20Request&body=I%20would%20like%20to%20request%20a%20virtual%20consultation%20via%20Microsoft%20Teams."
-        className="text-lg font-serif hover:text-brand-accent transition-colors">
+        className="text-lg font-serif hover:text-brand-accent transition-colors text-white">
         Request a Teams Meeting
       </a>
     ),
@@ -58,7 +58,7 @@ const contactDetails = [
     icon: <MapPin size={16} className="text-brand-accent" />,
     label: 'Office',
     content: (
-      <p className="text-base font-light leading-relaxed text-brand-primary/80">
+      <p className="text-base font-light leading-relaxed text-white/80">
         Second Floor, Capital Hill<br />
         6 Benmore Road, Morningside<br />
         Sandton, Gauteng, 2057
@@ -69,7 +69,7 @@ const contactDetails = [
     icon: <Clock size={16} className="text-brand-accent" />,
     label: 'Office Hours',
     content: (
-      <p className="text-base font-light text-brand-primary/80">
+      <p className="text-base font-light text-white/80">
         Monday — Friday<br />08:00 — 17:00
       </p>
     ),
@@ -86,6 +86,29 @@ export default function ContactPage() {
     setSubmitted(true);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1] as any,
+      },
+    },
+  };
+
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
@@ -96,19 +119,19 @@ export default function ContactPage() {
       </Helmet>
 
       {/* Hero */}
-      <section className="pt-36 pb-12 px-12 lg:px-24">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-36 pb-12 px-6 md:px-12 lg:px-24">
+        <div className="max-w-7xl mx-auto animate-fadeIn">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8 }}
             className="space-y-6"
           >
             <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold">Connect</span>
-            <h1 className="text-6xl md:text-8xl font-serif leading-tight md:whitespace-nowrap">
+            <h1 className="text-6xl md:text-8xl font-serif leading-tight">
               <Editable id="contact_hero_title" defaultText="Engage Our" /> <span className="italic"><Editable id="contact_hero_title_2" defaultText="Expertise" /></span>
             </h1>
-            <p className="text-xl font-light text-brand-primary/60 leading-relaxed max-w-none">
+            <p className="text-xl font-light text-brand-primary/60 leading-relaxed max-w-2xl">
               Reach out to our Sandton office to discuss your commercial legal requirements or schedule a consultation with one of our directors.
             </p>
             <div className="w-16 h-px bg-brand-accent" />
@@ -117,39 +140,62 @@ export default function ContactPage() {
       </section>
 
       {/* Contact details + form */}
-      <section className="py-14 lg:py-24 px-12 lg:px-24 bg-white border-t border-brand-border">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-
-          {/* Left: contact info */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="grid grid-cols-1 gap-6">
-              {contactDetails.map(({ icon, label, content }) => (
-                <div key={label} className="flex items-start gap-4 p-5 rounded-2xl border border-brand-border bg-brand-cream/20 hover:bg-brand-cream/40 hover:border-brand-accent/30 hover:-translate-y-0.5 transition-all duration-300 shadow-sm group">
-                  <div className="w-10 h-10 rounded-full bg-white border border-brand-border flex items-center justify-center shrink-0 mt-0.5 group-hover:border-brand-accent transition-colors shadow-inner">
-                    {icon}
-                  </div>
-                  <div className="space-y-1.5 pt-1">
-                    <p className="text-[9px] uppercase tracking-[0.35em] font-bold text-brand-accent">{label}</p>
-                    <div className="text-brand-primary">
-                      {content}
-                    </div>
-                  </div>
+      <section className="pb-20 lg:pb-32 px-6 md:px-12 lg:px-24 bg-brand-cream">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-white rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2"
+          >
+            {/* Left Column: Dark navy connect panel */}
+            <div className="bg-brand-primary text-brand-cream p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-between space-y-10 lg:border-r lg:border-b-0 border-b border-white/5">
+              <div className="space-y-8">
+                <div className="space-y-2">
+                  <span className="text-[9px] uppercase tracking-[0.45em] text-brand-accent font-bold">Direct Channels</span>
+                  <h2 className="text-3xl font-serif text-white">Get in <span className="italic">Touch</span></h2>
+                  <div className="w-10 h-px bg-brand-accent/40" />
                 </div>
-              ))}
+
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5"
+                >
+                  {contactDetails.map(({ icon, label, content }) => (
+                    <motion.div
+                      key={label}
+                      variants={itemVariants}
+                      className="flex items-center gap-4 p-5 rounded-2xl border border-white/10 bg-white/5 hover:border-brand-accent/30 hover:bg-white/10 transition-all duration-300 shadow-sm group"
+                    >
+                      <div className="w-9 h-9 rounded-full bg-brand-primary/80 border border-white/10 flex items-center justify-center shrink-0 group-hover:border-brand-accent transition-colors shadow-inner text-brand-accent">
+                        {icon}
+                      </div>
+                      <div className="space-y-1.5">
+                        <p className="text-[9px] uppercase tracking-[0.35em] font-bold text-brand-accent/80">{label}</p>
+                        <div className="text-white/95">
+                          {content}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Response commitment */}
+              <div className="flex items-center gap-3 pt-6 border-t border-white/10">
+                <CheckCircle size={14} className="text-brand-accent shrink-0 animate-pulse" />
+                <p className="text-xs text-white/60 font-light">
+                  We respond to all enquiries within one business day.
+                </p>
+              </div>
             </div>
 
-            {/* Response commitment */}
-            <div className="flex items-center gap-3 pt-6 border-t border-brand-border">
-              <CheckCircle size={14} className="text-brand-accent shrink-0" />
-              <p className="text-xs text-brand-primary/50 font-light">
-                We respond to all enquiries within one business day.
-              </p>
-            </div>
-          </div>
-
-          {/* Right: form */}
-          <div className="lg:col-span-7">
-            <div className="bg-brand-cream/40 p-10 lg:p-14 rounded-2xl border border-brand-border shadow-sm">
+            {/* Right Column: form */}
+            <div className="p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-center bg-white">
               {submitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -172,37 +218,36 @@ export default function ContactPage() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-8">
-
                   {/* Segment 01 / Personal Details */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-3 border-b border-brand-border/40 pb-2">
                       <span className="font-mono text-xs text-brand-accent font-bold">01</span>
-                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/50">Personal Details</span>
+                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Personal Details</span>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2 group/field">
-                        <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40 group-focus-within/field:text-brand-accent transition-colors duration-200">Full Name</label>
+                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Full Name</label>
                         <input required type="text" placeholder="Jane Smith"
-                          className="w-full bg-white border border-brand-border rounded-lg px-4 py-3 text-sm focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/25 shadow-sm" />
+                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
                       </div>
                       <div className="space-y-2 group/field">
-                        <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40 group-focus-within/field:text-brand-accent transition-colors duration-200">Email Address</label>
+                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Email Address</label>
                         <input required type="email" placeholder="jane@company.com"
-                          className="w-full bg-white border border-brand-border rounded-lg px-4 py-3 text-sm focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/25 shadow-sm" />
+                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2 group/field">
-                        <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40 group-focus-within/field:text-brand-accent transition-colors duration-200">Phone Number</label>
+                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Phone Number</label>
                         <input type="tel" placeholder="+27 (0)11 000 0000"
-                          className="w-full bg-white border border-brand-border rounded-lg px-4 py-3 text-sm focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/25 shadow-sm" />
+                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
                       </div>
                       <div className="space-y-2 group/field">
-                        <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40 group-focus-within/field:text-brand-accent transition-colors duration-200">Company / Organisation</label>
+                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Company / Organisation</label>
                         <input type="text" placeholder="Acme (Pty) Ltd"
-                          className="w-full bg-white border border-brand-border rounded-lg px-4 py-3 text-sm focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/25 shadow-sm" />
+                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
                       </div>
                     </div>
                   </div>
@@ -211,14 +256,14 @@ export default function ContactPage() {
                   <div className="space-y-6 pt-2">
                     <div className="flex items-center gap-3 border-b border-brand-border/40 pb-2">
                       <span className="font-mono text-xs text-brand-accent font-bold">02</span>
-                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/50">Matter Specification</span>
+                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Matter Specification</span>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2 group/field">
-                        <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40 group-focus-within/field:text-brand-accent transition-colors duration-200">Practice Area</label>
+                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Practice Area</label>
                         <div className="relative">
-                          <select className="w-full bg-white border border-brand-border rounded-lg px-4 py-3 text-sm focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all appearance-none cursor-pointer text-brand-primary pr-10 shadow-sm">
+                          <select className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all appearance-none cursor-pointer text-brand-primary pr-10 shadow-sm">
                             <option>Mergers &amp; Acquisitions</option>
                             <option>Deal &amp; Transaction Structuring</option>
                             <option>Dispute Resolution &amp; Litigation</option>
@@ -237,7 +282,7 @@ export default function ContactPage() {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40">Matter Type</label>
+                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75">Matter Type</label>
                         <div className="grid grid-cols-2 gap-2">
                           {[
                             { value: 'New Client Enquiry', label: 'New Client' },
@@ -252,7 +297,7 @@ export default function ContactPage() {
                               className={`py-2.5 px-3 rounded-lg border text-center transition-all duration-300 text-[10px] uppercase tracking-wider font-bold whitespace-nowrap ${
                                 matterType === opt.value
                                   ? 'bg-brand-primary text-white border-brand-primary shadow-sm'
-                                  : 'bg-white border-brand-border text-brand-primary/60 hover:border-brand-accent/40 hover:text-brand-primary hover:bg-brand-cream/10'
+                                  : 'bg-brand-cream/20 border-brand-border/60 text-brand-primary/60 hover:border-brand-accent/40 hover:text-brand-primary hover:bg-brand-cream/40'
                               }`}
                             >
                               {opt.label}
@@ -267,12 +312,12 @@ export default function ContactPage() {
                   <div className="space-y-6 pt-2">
                     <div className="flex items-center gap-3 border-b border-brand-border/40 pb-2">
                       <span className="font-mono text-xs text-brand-accent font-bold">03</span>
-                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/50">Details &amp; Communication</span>
+                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Details &amp; Communication</span>
                     </div>
 
                     {/* Preferred contact method */}
                     <div className="space-y-3">
-                      <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40">Preferred Response Method</label>
+                      <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75">Preferred Response Method</label>
                       <div className="flex flex-wrap gap-2.5">
                         {[
                           { value: 'email', label: 'Email', icon: <Mail size={12} /> },
@@ -287,7 +332,7 @@ export default function ContactPage() {
                             className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-[10px] uppercase tracking-wider font-bold transition-all duration-200 ${
                               preferredContact === opt.value
                                 ? 'bg-brand-primary text-white border-brand-primary'
-                                : 'border-brand-border text-brand-primary/50 hover:border-brand-primary/40 hover:bg-white'
+                                : 'bg-brand-cream/20 border-brand-border/60 text-brand-primary/50 hover:border-brand-primary/40 hover:bg-brand-cream/40'
                             }`}
                           >
                             {opt.icon} {opt.label}
@@ -298,16 +343,15 @@ export default function ContactPage() {
 
                     {/* Message */}
                     <div className="space-y-2 group/field">
-                      <label className="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-primary/40 group-focus-within/field:text-brand-accent transition-colors duration-200">Message</label>
+                      <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Message</label>
                       <textarea required rows={4} placeholder="Briefly describe how we can assist you…"
-                        className="w-full bg-white border border-brand-border rounded-lg px-4 py-3 text-sm focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/25 resize-none shadow-sm" />
+                        className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 resize-none shadow-sm text-brand-primary" />
                     </div>
                   </div>
 
                   <div className="space-y-3 pt-2">
                     <button type="submit"
-                      className="w-full py-4 bg-brand-primary text-brand-cream uppercase tracking-[3px] text-[10px] font-bold rounded-full hover:bg-brand-accent transition-all duration-500 flex items-center justify-center gap-3 relative overflow-hidden group">
-                      {/* Sliding glass reflection sheen effect on hover */}
+                      className="w-full py-4 bg-brand-primary text-brand-cream uppercase tracking-[3px] text-[10px] font-bold rounded-full hover:bg-brand-accent transition-all duration-500 flex items-center justify-center gap-3 relative overflow-hidden group shadow-md hover:shadow-lg">
                       <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:animate-sheen pointer-events-none" />
                       <span className="relative z-10 flex items-center gap-3">Send Enquiry <ArrowRight size={13} /></span>
                     </button>
@@ -318,7 +362,7 @@ export default function ContactPage() {
                 </form>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
