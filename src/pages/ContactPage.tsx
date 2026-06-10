@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Editable } from '../components/Editable';
-import { PhoneCall, Mail, MapPin, Clock, ArrowRight, Video, MessageCircle, CheckCircle } from 'lucide-react';
+import { PhoneCall, Mail, MapPin, Clock, ArrowRight, Video, MessageCircle, CheckCircle, ChevronDown } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 const directors = [
@@ -314,53 +314,53 @@ export default function ContactPage() {
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
+                <form onSubmit={handleSubmit} className="space-y-10">
                   {/* Segment 01 / Personal Details */}
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-3 border-b border-brand-border/40 pb-2">
+                  <div className="space-y-8">
+                    <div className="flex items-center gap-3 border-b border-brand-border/40 pb-3 mb-2">
                       <span className="font-mono text-xs text-brand-accent font-bold">01</span>
-                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Personal Details</span>
+                      <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Personal Details</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="space-y-2 group/field">
-                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Full Name</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                      <div className="flex flex-col gap-2.5 group/field">
+                        <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Full Name</label>
                         <input required type="text" placeholder="Jane Smith"
-                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
+                          className="w-full bg-brand-cream/35 border border-brand-border/60 rounded-lg px-4 py-3.5 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/35 shadow-sm text-brand-primary font-medium" />
                       </div>
-                      <div className="space-y-2 group/field">
-                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Email Address</label>
+                      <div className="flex flex-col gap-2.5 group/field">
+                        <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Email Address</label>
                         <input required type="email" placeholder="jane@company.com"
-                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
+                          className="w-full bg-brand-cream/35 border border-brand-border/60 rounded-lg px-4 py-3.5 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/35 shadow-sm text-brand-primary font-medium" />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="space-y-2 group/field">
-                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Phone Number</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                      <div className="flex flex-col gap-2.5 group/field">
+                        <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Phone Number</label>
                         <input type="tel" placeholder="+27 (0)11 000 0000"
-                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
+                          className="w-full bg-brand-cream/35 border border-brand-border/60 rounded-lg px-4 py-3.5 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/35 shadow-sm text-brand-primary font-medium" />
                       </div>
-                      <div className="space-y-2 group/field">
-                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Company / Organisation</label>
+                      <div className="flex flex-col gap-2.5 group/field">
+                        <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Company / Organisation</label>
                         <input type="text" placeholder="Acme (Pty) Ltd"
-                          className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 shadow-sm text-brand-primary" />
+                          className="w-full bg-brand-cream/35 border border-brand-border/60 rounded-lg px-4 py-3.5 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/35 shadow-sm text-brand-primary font-medium" />
                       </div>
                     </div>
                   </div>
 
                   {/* Segment 02 / Matter Specification */}
-                  <div className="space-y-6 pt-2">
-                    <div className="flex items-center gap-3 border-b border-brand-border/40 pb-2">
+                  <div className="space-y-8 pt-4">
+                    <div className="flex items-center gap-3 border-b border-brand-border/40 pb-3 mb-2">
                       <span className="font-mono text-xs text-brand-accent font-bold">02</span>
-                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Matter Specification</span>
+                      <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Matter Specification</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="space-y-2 group/field">
-                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Practice Area</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                      <div className="flex flex-col gap-2.5 group/field">
+                        <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Practice Area</label>
                         <div className="relative">
-                          <select className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all appearance-none cursor-pointer text-brand-primary pr-10 shadow-sm">
+                          <select className="w-full bg-brand-cream/35 border border-brand-border/60 rounded-lg px-4 py-3.5 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all appearance-none cursor-pointer text-brand-primary pr-10 shadow-sm font-medium">
                             <option>Mergers &amp; Acquisitions</option>
                             <option>Deal &amp; Transaction Structuring</option>
                             <option>Dispute Resolution &amp; Litigation</option>
@@ -373,13 +373,13 @@ export default function ContactPage() {
                             <option>General Enquiry</option>
                           </select>
                           <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-brand-primary/40">
-                            <ArrowRight size={12} className="rotate-90" />
+                            <ChevronDown size={15} />
                           </span>
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75">Matter Type</label>
+                      <div className="flex flex-col gap-2.5">
+                        <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Matter Type</label>
                         <div className="grid grid-cols-2 gap-2">
                           {[
                             { value: 'New Client Enquiry', label: 'New Client' },
@@ -391,7 +391,7 @@ export default function ContactPage() {
                               key={opt.value}
                               type="button"
                               onClick={() => setMatterType(opt.value)}
-                              className={`py-2.5 px-3 rounded-lg border text-center transition-all duration-300 text-[10px] uppercase tracking-wider font-bold whitespace-nowrap ${
+                              className={`py-3 px-3 rounded-lg border text-center transition-all duration-300 text-[10px] uppercase tracking-wider font-bold whitespace-nowrap ${
                                 matterType === opt.value
                                   ? 'bg-brand-primary text-white border-brand-primary shadow-sm'
                                   : 'bg-brand-cream/20 border-brand-border/60 text-brand-primary/60 hover:border-brand-accent/40 hover:text-brand-primary hover:bg-brand-cream/40'
@@ -406,15 +406,15 @@ export default function ContactPage() {
                   </div>
 
                   {/* Segment 03 / Details & Communication */}
-                  <div className="space-y-6 pt-2">
-                    <div className="flex items-center gap-3 border-b border-brand-border/40 pb-2">
+                  <div className="space-y-8 pt-4">
+                    <div className="flex items-center gap-3 border-b border-brand-border/40 pb-3 mb-2">
                       <span className="font-mono text-xs text-brand-accent font-bold">03</span>
-                      <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Details &amp; Communication</span>
+                      <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Details &amp; Communication</span>
                     </div>
 
                     {/* Preferred contact method */}
-                    <div className="space-y-3">
-                      <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75">Preferred Response Method</label>
+                    <div className="flex flex-col gap-2.5">
+                      <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Preferred Response Method</label>
                       <div className="flex flex-wrap gap-2.5">
                         {[
                           { value: 'email', label: 'Email', icon: <Mail size={12} /> },
@@ -426,7 +426,7 @@ export default function ContactPage() {
                             key={opt.value}
                             type="button"
                             onClick={() => setPreferredContact(opt.value)}
-                            className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-[10px] uppercase tracking-wider font-bold transition-all duration-200 ${
+                            className={`flex items-center gap-2 px-4 py-3 rounded-full border text-[10px] uppercase tracking-wider font-bold transition-all duration-200 ${
                               preferredContact === opt.value
                                 ? 'bg-brand-primary text-white border-brand-primary'
                                 : 'bg-brand-cream/20 border-brand-border/60 text-brand-primary/50 hover:border-brand-primary/40 hover:bg-brand-cream/40'
@@ -439,14 +439,14 @@ export default function ContactPage() {
                     </div>
 
                     {/* Message */}
-                    <div className="space-y-2 group/field">
-                      <label className="text-[10px] uppercase tracking-[0.25em] font-bold text-brand-primary/75 group-focus-within/field:text-brand-accent transition-colors duration-200">Message</label>
+                    <div className="flex flex-col gap-2.5 group/field">
+                      <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Message</label>
                       <textarea required rows={4} placeholder="Briefly describe how we can assist you…"
-                        className="w-full bg-brand-cream/30 border border-brand-border/60 rounded-lg px-4 py-3 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/40 resize-none shadow-sm text-brand-primary" />
+                        className="w-full bg-brand-cream/35 border border-brand-border/60 rounded-lg px-4 py-3.5 text-sm focus:bg-white focus:border-brand-accent focus:outline-none focus:ring-1 focus:ring-brand-accent focus:shadow-[0_0_12px_rgba(197,160,89,0.15)] transition-all placeholder:text-brand-primary/35 resize-none shadow-sm text-brand-primary font-medium" />
                     </div>
                   </div>
 
-                  <div className="space-y-3 pt-2">
+                  <div className="space-y-3 pt-4">
                     <button type="submit"
                       className="w-full py-4 bg-brand-primary text-brand-cream uppercase tracking-[3px] text-[10px] font-bold rounded-full hover:bg-brand-accent transition-all duration-500 flex items-center justify-center gap-3 relative overflow-hidden group shadow-md hover:shadow-lg">
                       <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:animate-sheen pointer-events-none" />
