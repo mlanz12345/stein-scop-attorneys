@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Editable } from '../components/Editable';
-import { PhoneCall, Mail, MapPin, Clock, ArrowRight, Video, MessageCircle, CheckCircle, ChevronDown } from 'lucide-react';
+import { PhoneCall, Mail, MapPin, Clock, ArrowRight, Video, MessageCircle, CheckCircle, ChevronDown, X } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 const directors = [
@@ -81,12 +81,34 @@ export default function ContactPage() {
   const [preferredContact, setPreferredContact] = useState('email');
   const [matterType, setMatterType] = useState('New Client Enquiry');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsExpanded(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (isExpanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isExpanded]);
 
   const leftColumnVariants: any = {
     hidden: { 
@@ -217,7 +239,7 @@ export default function ContactPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className="w-full lg:w-[calc(50%-32px)] bg-brand-primary text-brand-cream p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-between space-y-10 rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden z-10"
+              className="w-full lg:w-[calc(50%-32px)] bg-brand-primary text-brand-cream p-5 sm:p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-between space-y-10 rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden z-10"
             >
               <div className="space-y-8">
                 <div className="space-y-2">
@@ -231,16 +253,16 @@ export default function ContactPage() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="grid grid-cols-1 gap-5"
+                  className="grid grid-cols-1 gap-4 sm:gap-5"
                 >
                   {contactDetails.map(({ icon, label, content }) => (
                     <motion.div
                       key={label}
                       variants={itemVariants}
-                      className="flex items-center justify-between gap-5 p-6 rounded-2xl border border-white/[0.04] bg-[#111726] hover:border-brand-accent/30 hover:bg-[#151c2e] transition-all duration-300 shadow-sm group"
+                      className="flex items-center justify-between gap-4 sm:gap-5 p-4 sm:p-5 md:p-6 rounded-2xl border border-white/[0.04] bg-[#111726] hover:border-brand-accent/30 hover:bg-[#151c2e] transition-all duration-300 shadow-sm group"
                     >
-                      <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center shrink-0 group-hover:border-brand-accent group-hover:bg-brand-accent/[0.06] transition-all duration-300 text-brand-accent bg-transparent">
+                      <div className="flex items-center gap-4 sm:gap-5">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/10 flex items-center justify-center shrink-0 group-hover:border-brand-accent group-hover:bg-brand-accent/[0.06] transition-all duration-300 text-brand-accent bg-transparent">
                           {icon}
                         </div>
                         <div className="space-y-1">
@@ -282,19 +304,48 @@ export default function ContactPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className="lg:hidden w-full h-px bg-brand-accent/25 my-4 origin-center z-0"
+              className="lg:hidden w-full h-px bg-brand-accent/25 my-6 sm:my-8 origin-center z-0"
             />
 
             {/* Right Column: form */}
             <motion.div
+              layout
               variants={rightColumnVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className="w-full lg:w-[calc(50%-32px)] p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-center bg-white rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden z-10"
+              onClick={!isExpanded ? () => setIsExpanded(true) : undefined}
+              className={
+                isExpanded
+                  ? "fixed inset-0 z-50 bg-white p-6 md:p-12 lg:p-16 overflow-y-auto flex flex-col items-center justify-start rounded-none"
+                  : "w-full lg:w-[calc(50%-32px)] p-5 sm:p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-center bg-white rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden z-10 cursor-pointer hover:border-brand-accent/50 hover:shadow-2xl transition-all duration-300 group/form"
+              }
             >
-              {submitted ? (
-                <motion.div
+              {isExpanded && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(false);
+                  }}
+                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-brand-cream text-brand-primary/60 hover:text-brand-primary transition-all duration-200 z-50 flex items-center gap-2 text-xs uppercase tracking-wider font-semibold"
+                >
+                  <span>Exit Focus Mode</span>
+                  <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-sans bg-brand-cream border border-brand-border rounded shadow-xs text-brand-primary/50">ESC</kbd>
+                  <X size={14} />
+                </button>
+              )}
+
+              {!isExpanded && (
+                <div className="absolute top-6 right-6 text-[9px] uppercase tracking-widest font-bold text-brand-primary/30 group-hover/form:text-brand-accent transition-colors duration-300 flex items-center gap-1.5 pointer-events-none">
+                  <span>Focus View</span>
+                  <ArrowRight size={10} className="-rotate-45" />
+                </div>
+              )}
+
+              <div className={isExpanded ? "w-full max-w-2xl my-auto py-8 relative" : "w-full"}>
+                {submitted ? (
+                  <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center space-y-6 py-12"
@@ -322,7 +373,7 @@ export default function ContactPage() {
                       <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Personal Details</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
                       <div className="flex flex-col gap-2.5 group/field">
                         <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Full Name</label>
                         <input required type="text" placeholder="Jane Smith"
@@ -335,7 +386,7 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
                       <div className="flex flex-col gap-2.5 group/field">
                         <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Phone Number</label>
                         <input type="tel" placeholder="+27 (0)11 000 0000"
@@ -356,7 +407,7 @@ export default function ContactPage() {
                       <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80">Matter Specification</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
                       <div className="flex flex-col gap-2.5 group/field">
                         <label className="text-[11px] uppercase tracking-[0.25em] font-bold text-brand-primary/80 group-focus-within/field:text-brand-accent transition-colors duration-200">Practice Area</label>
                         <div className="relative">
@@ -458,13 +509,14 @@ export default function ContactPage() {
                   </div>
                 </form>
               )}
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Speak directly to a director */}
-      <section className="py-14 px-12 lg:px-24 bg-white border-t border-brand-border">
+      <section className="py-14 px-6 md:px-12 lg:px-24 bg-white border-t border-brand-border">
         <div className="max-w-7xl mx-auto">
           <div className="mb-10">
             <span className="text-[9px] uppercase tracking-[0.4em] text-brand-accent font-bold mb-3 block">Prefer Direct Access</span>
