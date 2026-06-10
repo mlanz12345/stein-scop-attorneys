@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Editable } from '../components/Editable';
 import { PhoneCall, Mail, MapPin, Clock, ArrowRight, Video, MessageCircle, CheckCircle } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const directors = [
   { name: 'Glenn Stein', focus: 'M&A · Technology · Litigation' },
@@ -16,49 +16,49 @@ const directors = [
 
 const contactDetails = [
   {
-    icon: <PhoneCall size={16} className="text-brand-accent" />,
+    icon: <PhoneCall size={20} className="text-brand-accent" />,
     label: 'Phone',
     content: (
-      <a href="tel:+27113808080" className="text-lg font-serif lining-nums hover:text-brand-accent transition-colors text-white">
+      <a href="tel:+27113808080" className="text-xl font-serif lining-nums hover:text-brand-accent transition-colors text-white">
         +27 (0)11 380 80 80
       </a>
     ),
   },
   {
-    icon: <MessageCircle size={16} className="text-brand-accent" />,
+    icon: <MessageCircle size={20} className="text-brand-accent" />,
     label: 'WhatsApp',
     content: (
       <a href="https://wa.me/27113808080" target="_blank" rel="noopener noreferrer"
-        className="text-lg font-serif lining-nums hover:text-brand-accent transition-colors text-white">
+        className="text-xl font-serif lining-nums hover:text-brand-accent transition-colors text-white">
         +27 (0)11 380 80 80
       </a>
     ),
   },
   {
-    icon: <Mail size={16} className="text-brand-accent" />,
+    icon: <Mail size={20} className="text-brand-accent" />,
     label: 'Email',
     content: (
       <a href="mailto:info@steinscop.com"
-        className="text-lg font-serif hover:text-brand-accent transition-colors text-white">
+        className="text-xl font-serif hover:text-brand-accent transition-colors text-white">
         info@steinscop.com
       </a>
     ),
   },
   {
-    icon: <Video size={16} className="text-brand-accent" />,
+    icon: <Video size={20} className="text-brand-accent" />,
     label: 'Virtual Meeting',
     content: (
       <a href="mailto:info@steinscop.com?subject=Virtual%20Consultation%20Request&body=I%20would%20like%20to%20request%20a%20virtual%20consultation%20via%20Microsoft%20Teams."
-        className="text-lg font-serif hover:text-brand-accent transition-colors text-white">
+        className="text-xl font-serif hover:text-brand-accent transition-colors text-white">
         Request a Teams Meeting
       </a>
     ),
   },
   {
-    icon: <MapPin size={16} className="text-brand-accent" />,
+    icon: <MapPin size={20} className="text-brand-accent" />,
     label: 'Office',
     content: (
-      <p className="text-base font-light leading-relaxed text-white/80">
+      <p className="text-sm font-light leading-relaxed text-white/80">
         Second Floor, Capital Hill<br />
         6 Benmore Road, Morningside<br />
         Sandton, Gauteng, 2057
@@ -66,10 +66,10 @@ const contactDetails = [
     ),
   },
   {
-    icon: <Clock size={16} className="text-brand-accent" />,
+    icon: <Clock size={20} className="text-brand-accent" />,
     label: 'Office Hours',
     content: (
-      <p className="text-base font-light text-white/80">
+      <p className="text-sm font-light text-white/80">
         Monday — Friday<br />08:00 — 17:00
       </p>
     ),
@@ -80,6 +80,73 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [preferredContact, setPreferredContact] = useState('email');
   const [matterType, setMatterType] = useState('New Client Enquiry');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const leftColumnVariants: any = {
+    hidden: { 
+      opacity: 0, 
+      x: isMobile ? 0 : 50, 
+      y: isMobile ? 30 : 0 
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration: 0.9,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
+  const rightColumnVariants: any = {
+    hidden: { 
+      opacity: 0, 
+      x: isMobile ? 0 : -50, 
+      y: isMobile ? -30 : 0 
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration: 0.9,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
+  const desktopDividerVariants: any = {
+    hidden: { scaleY: 0, opacity: 0 },
+    visible: {
+      scaleY: 1,
+      opacity: 1,
+      transition: {
+        delay: 0.4,
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const mobileDividerVariants: any = {
+    hidden: { scaleX: 0, opacity: 0 },
+    visible: {
+      scaleX: 1,
+      opacity: 1,
+      transition: {
+        delay: 0.4,
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,17 +207,18 @@ export default function ContactPage() {
       </section>
 
       {/* Contact details + form */}
-      <section className="pb-20 lg:pb-32 px-6 md:px-12 lg:px-24 bg-brand-cream">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-white rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2"
-          >
+      <section className="pb-20 lg:pb-32 px-6 md:px-12 lg:px-24 bg-brand-cream overflow-hidden">
+        <div className="max-w-7xl mx-auto relative">
+          
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-stretch relative">
             {/* Left Column: Dark navy connect panel */}
-            <div className="bg-brand-primary text-brand-cream p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-between space-y-10 lg:border-r lg:border-b-0 border-b border-white/5">
+            <motion.div
+              variants={leftColumnVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="w-full lg:w-[calc(50%-32px)] bg-brand-primary text-brand-cream p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-between space-y-10 rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden z-10"
+            >
               <div className="space-y-8">
                 <div className="space-y-2">
                   <span className="text-[9px] uppercase tracking-[0.45em] text-brand-accent font-bold">Direct Channels</span>
@@ -163,23 +231,28 @@ export default function ContactPage() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5"
+                  className="grid grid-cols-1 gap-5"
                 >
                   {contactDetails.map(({ icon, label, content }) => (
                     <motion.div
                       key={label}
                       variants={itemVariants}
-                      className="flex items-center gap-4 p-5 rounded-2xl border border-white/10 bg-white/5 hover:border-brand-accent/30 hover:bg-white/10 transition-all duration-300 shadow-sm group"
+                      className="flex items-center justify-between gap-5 p-6 rounded-2xl border border-white/[0.04] bg-[#111726] hover:border-brand-accent/30 hover:bg-[#151c2e] transition-all duration-300 shadow-sm group"
                     >
-                      <div className="w-9 h-9 rounded-full bg-brand-primary/80 border border-white/10 flex items-center justify-center shrink-0 group-hover:border-brand-accent transition-colors shadow-inner text-brand-accent">
-                        {icon}
-                      </div>
-                      <div className="space-y-1.5">
-                        <p className="text-[9px] uppercase tracking-[0.35em] font-bold text-brand-accent/80">{label}</p>
-                        <div className="text-white/95">
-                          {content}
+                      <div className="flex items-center gap-5">
+                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center shrink-0 group-hover:border-brand-accent group-hover:bg-brand-accent/[0.06] transition-all duration-300 text-brand-accent bg-transparent">
+                          {icon}
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-accent">{label}</p>
+                          <div className="text-white">
+                            {content}
+                          </div>
                         </div>
                       </div>
+                      {label === 'Virtual Meeting' && (
+                        <div className="w-6 h-6 rounded-full border border-brand-accent/40 flex items-center justify-center shrink-0 group-hover:border-brand-accent transition-colors duration-300 mr-2" />
+                      )}
                     </motion.div>
                   ))}
                 </motion.div>
@@ -192,10 +265,34 @@ export default function ContactPage() {
                   We respond to all enquiries within one business day.
                 </p>
               </div>
-            </div>
+            </motion.div>
+
+            {/* Middle Divider Line */}
+            {/* Desktop Divider */}
+            <motion.div 
+              variants={desktopDividerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="hidden lg:block absolute left-1/2 top-4 bottom-4 w-px bg-brand-accent/30 -translate-x-1/2 origin-center z-0"
+            />
+            {/* Mobile Divider */}
+            <motion.div 
+              variants={mobileDividerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="lg:hidden w-full h-px bg-brand-accent/25 my-4 origin-center z-0"
+            />
 
             {/* Right Column: form */}
-            <div className="p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-center bg-white">
+            <motion.div
+              variants={rightColumnVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="w-full lg:w-[calc(50%-32px)] p-8 md:p-10 lg:p-12 xl:p-14 flex flex-col justify-center bg-white rounded-3xl border border-brand-border/60 shadow-xl overflow-hidden z-10"
+            >
               {submitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -361,8 +458,8 @@ export default function ContactPage() {
                   </div>
                 </form>
               )}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

@@ -62,20 +62,30 @@ export default function Results() {
 
   useEffect(() => {
     const container = scrollRef.current;
-    if (!container) return;
 
     const handleScroll = () => {
-      // Use viewport coordinates so the trigger is always 15% below the
-      // container's top edge — unaffected by positioning context quirks.
-      const containerTop = container.getBoundingClientRect().top;
-      const triggerY = containerTop + container.clientHeight * 0.15;
-
-      // Last item whose top edge has crossed (or is at) the trigger line.
+      const isMobile = window.innerWidth < 1024; // lg breakpoint
       let newIndex = 0;
-      itemRefs.current.forEach((ref, i) => {
-        if (!ref) return;
-        if (ref.getBoundingClientRect().top <= triggerY) newIndex = i;
-      });
+
+      if (isMobile) {
+        // Track relative to window viewport (30% from the top)
+        const triggerY = window.innerHeight * 0.3;
+        itemRefs.current.forEach((ref, i) => {
+          if (!ref) return;
+          const rect = ref.getBoundingClientRect();
+          if (rect.top <= triggerY) {
+            newIndex = i;
+          }
+        });
+      } else {
+        if (!container) return;
+        const containerTop = container.getBoundingClientRect().top;
+        const triggerY = containerTop + container.clientHeight * 0.15;
+        itemRefs.current.forEach((ref, i) => {
+          if (!ref) return;
+          if (ref.getBoundingClientRect().top <= triggerY) newIndex = i;
+        });
+      }
 
       if (newIndex !== activeIndexRef.current) {
         setDirection(newIndex > activeIndexRef.current ? 1 : -1);
@@ -84,18 +94,29 @@ export default function Results() {
       }
     };
 
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    return () => container.removeEventListener('scroll', handleScroll);
+    if (container) {
+      container.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial check
+    handleScroll();
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
     <section
       id="results"
-      style={{ background: '#000000', height: '100vh' }}
-      className="text-white flex flex-col overflow-hidden"
+      className="bg-black text-white flex flex-col lg:h-screen lg:overflow-hidden relative"
     >
       {/* Header */}
-      <div className="px-12 lg:px-24 pt-28 pb-4 shrink-0">
+      <div className="px-6 md:px-12 lg:px-24 pt-28 pb-4 shrink-0">
         <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold block mb-4">
           <Editable id="results_tag" defaultText="Track Record" />
         </span>
@@ -108,7 +129,7 @@ export default function Results() {
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 overflow-hidden px-12 lg:px-24">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-visible lg:overflow-hidden px-6 md:px-12 lg:px-24 relative">
 
         {/* Left — static number, clipped to column width */}
         <div className="hidden lg:flex w-[38%] shrink-0 items-start pt-6 overflow-hidden select-none">
@@ -130,14 +151,24 @@ export default function Results() {
         </div>
 
         {/* Right — scrollable records with fade mask */}
-        <div className="w-full lg:w-[62%] relative h-full flex flex-col">
+        <div className="w-full lg:w-[62%] relative lg:h-full flex flex-col overflow-visible">
+          {/* Mobile Sticky Counter */}
+          <div className="lg:hidden sticky top-[80px] z-30 self-end bg-brand-primary/90 backdrop-blur-md border border-white/10 rounded-full px-4 py-1.5 flex items-center shadow-lg font-sans mr-2 -mb-8">
+            <span className="text-sm font-bold text-white tracking-tight">
+              {String(activeIndex + 1).padStart(2, '0')}
+            </span>
+            <span className="text-white/30 text-[10px] font-light tracking-widest ml-1.5">
+              / {String(cases.length).padStart(2, '0')}
+            </span>
+          </div>
+
           {/* Subtle edge fades for smooth entry/exit */}
-          <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
+          <div className="hidden lg:block absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
+          <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
 
           <div
             ref={scrollRef}
-            className="overflow-y-auto no-scrollbar h-full flex-1"
+            className="lg:overflow-y-auto lg:no-scrollbar lg:h-full flex-1 overflow-visible h-auto"
           >
             {cases.map((item, i) => (
               <div
@@ -145,11 +176,6 @@ export default function Results() {
                 ref={(el) => { itemRefs.current[i] = el; }}
                 className="py-14 px-6 -mx-6 rounded-xl border-t border-white/[0.08] first:border-t-0 hover:bg-white/[0.02] transition-all duration-500 group/case"
               >
-                {/* Mobile index */}
-                <span className="block lg:hidden text-white/20 text-sm font-light tracking-widest mb-5">
-                  {String(i + 1).padStart(2, '0')} / {String(cases.length).padStart(2, '0')}
-                </span>
-
                 {/* Tag + outcome */}
                 <div className="flex items-center gap-3 mb-5">
                   <span className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-medium group-hover/case:text-white/50 transition-colors duration-300">
@@ -177,7 +203,8 @@ export default function Results() {
             ))}
 
             {/* Spacer so the last item can scroll past the trigger */}
-            <div className="h-[40vh]" />
+            <div className="hidden lg:block h-[40vh]" />
+            <div className="lg:hidden h-[10vh]" />
           </div>
         </div>
       </div>
