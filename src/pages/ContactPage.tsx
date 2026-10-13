@@ -10,8 +10,8 @@ const directors = [
   { name: 'Sian van der Weele', focus: 'Commercial Litigation · Insolvency' },
   { name: 'Safiyyah Buckas', focus: 'Employment · Labour Law' },
   { name: 'Casper Badenhorst', focus: 'Competition · Corporate Governance' },
-  { name: 'Brooke Roxburgh', focus: 'M&A · Corporate Commercial' },
   { name: 'Jemma Brasler', focus: 'Employment · Executive Matters' },
+  { name: 'Simone Meades', focus: 'Commercial Litigation · Corporate Advisory' },
   { name: 'Nanri Labuschagne', focus: 'Commercial Litigation · Mining · Administrative Law' },
 ];
 

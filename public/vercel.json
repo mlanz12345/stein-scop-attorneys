@@ -1,3 +1,36 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/attorney/page/:page*",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/attorney/:name*",
+      "destination": "/team/:name*",
+      "permanent": true
+    },
+    {
+      "source": "/service/:name*",
+      "destination": "/practice-areas",
+      "permanent": true
+    },
+    {
+      "source": "/author/:author*",
+      "destination": "/insights",
+      "permanent": true
+    },
+    {
+      "source": "/team/brooke-badenhorst",
+      "destination": "/team",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

@@ -20,6 +20,11 @@
       "source": "/author/:author*",
       "destination": "/insights",
       "permanent": true
+    },
+    {
+      "source": "/team/brooke-badenhorst",
+      "destination": "/team",
+      "permanent": true
     }
   ],
   "rewrites": [
