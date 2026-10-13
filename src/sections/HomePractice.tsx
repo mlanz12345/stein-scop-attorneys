@@ -54,9 +54,9 @@ function PracticeCard({ p, i, isLast, nextTitle }: { p: typeof practices[0]; i: 
       style={{ zIndex: i + 1 }}
     >
       <motion.div style={{ scale, opacity }} className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-5xl font-serif font-normal text-brand-primary mb-6 leading-tight max-w-2xl">
+        <h3 className="text-3xl md:text-5xl font-serif font-normal text-brand-primary mb-6 leading-tight max-w-2xl">
           {p.title}
-        </h2>
+        </h3>
         <p className="text-base md:text-lg text-brand-primary/60 font-light leading-relaxed max-w-xl">
           {p.desc}
         </p>

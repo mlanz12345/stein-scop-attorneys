@@ -12,19 +12,25 @@ const EditContext = createContext<EditContextType | undefined>(undefined);
 
 export const EditProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isEditing, setIsEditing] = useState(() => {
+    if (typeof window === 'undefined') return false;
     // Check if we have an explicit mode stored
-    const stored = localStorage.getItem('lex_politica_edit_mode');
-    return stored === 'true';
+    try {
+      const stored = localStorage.getItem('lex_politica_edit_mode');
+      return stored === 'true';
+    } catch {
+      return false;
+    }
   });
   
   const [content, setContent] = useState<Record<string, string>>(() => {
-    const saved = localStorage.getItem('lex_politica_content');
-    if (saved) {
-      try {
+    if (typeof window === 'undefined') return {};
+    try {
+      const saved = localStorage.getItem('lex_politica_content');
+      if (saved) {
         return JSON.parse(saved);
-      } catch (e) {
-        console.error('Failed to parse saved content', e);
       }
+    } catch (e) {
+      console.error('Failed to parse saved content', e);
     }
     return {};
   });

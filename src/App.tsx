@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import Intro from './sections/Intro';
@@ -59,9 +59,9 @@ function HomePage() {
   return (
     <main>
       <Helmet>
-        <title>Stein Scop Attorneys | Commercial Law Firm — Sandton, Johannesburg</title>
-        <meta name="description" content="Stein Scop Attorneys Inc. is a director-led commercial law firm in Sandton, Johannesburg, advising clients across South Africa and the African continent on M&A, litigation, employment, mining, and more." />
-        <meta property="og:title" content="Stein Scop Attorneys | Commercial Law Firm" />
+        <title>Commercial Law Firm | Stein Scop Attorneys</title>
+        <meta name="description" content="Stein Scop Attorneys is a director-led commercial law firm in Sandton, Johannesburg, advising clients across South Africa and the African continent on M&A, litigation, employment, mining, and more." />
+        <meta property="og:title" content="Commercial Law Firm | Stein Scop Attorneys" />
         <meta property="og:description" content="Director-led commercial law firm in Sandton advising on M&A, litigation, employment, mining and more across South Africa and Africa." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.steinscop.com" />
@@ -77,7 +77,11 @@ function HomePage() {
   );
 }
 
-export default function App() {
+interface AppProps {
+  url?: string;
+}
+
+export default function App({ url }: AppProps = {}) {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -87,7 +91,7 @@ export default function App() {
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showPreloader, setShowPreloader] = useState(() => {
-    return !sessionStorage.getItem('ss_visited');
+    return typeof window !== 'undefined' ? !sessionStorage.getItem('ss_visited') : false;
   });
 
   useEffect(() => {
@@ -103,11 +107,15 @@ export default function App() {
     setShowPreloader(false);
   };
 
+  const isSSR = typeof window === 'undefined';
+  const RouterComponent = isSSR ? MemoryRouter : BrowserRouter;
+  const routerProps = isSSR ? { initialEntries: [url || '/'] } : {};
+
   return (
     <EditProvider>
       {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
 
-      <Router>
+      <RouterComponent {...routerProps}>
         <ScrollToTop />
         <motion.div
           initial={{ opacity: 0 }}
@@ -147,7 +155,7 @@ export default function App() {
           <Footer />
           <AdminToolbar />
         </motion.div>
-      </Router>
+      </RouterComponent>
     </EditProvider>
   );
 }

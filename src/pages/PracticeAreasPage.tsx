@@ -82,9 +82,9 @@ export default function PracticeAreasPage() {
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
-        <title>Practice Areas | Stein Scop Attorneys Inc.</title>
+        <title>Practice Areas | Stein Scop Attorneys</title>
         <meta name="description" content="Stein Scop Attorneys advises across M&A, commercial litigation, employment & labour, insolvency & business rescue, competition law, mining law, securities law, and communications & technology." />
-        <meta property="og:title" content="Practice Areas | Stein Scop Attorneys Inc." />
+        <meta property="og:title" content="Practice Areas | Stein Scop Attorneys" />
         <meta property="og:description" content="Expert legal counsel across M&A, litigation, employment, insolvency, competition, mining, securities, and technology law in South Africa." />
       </Helmet>
 

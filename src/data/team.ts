@@ -81,6 +81,16 @@ export const directors: TeamMember[] = [
     email: 'info@steinscop.com',
     practiceAreas: ['Employment & Labour Law', 'Executive Matters', 'Restraint of Trade', 'Section 189 Restructuring', 'Labour Court Litigation'],
   },
+  {
+    id: 'nanri-labuschagne',
+    name: 'Nanri Labuschagne',
+    title: 'Director',
+    qualifications: 'BCom Law; LLB',
+    bio: 'Nanri specialises in complex, high-value corporate and commercial litigation matters including public administrative law challenges, procurement law disputes, corporate governance disputes, contractual disputes, mining and mineral law disputes, banking and financial services disputes, construction disputes, debt recovery and liquidation disputes.',
+    image: 'https://www.steinscop.com/wp-content/uploads/2026/10/Nanri_Labuschagne-074_Black_and_White-removebg-preview-1.png',
+    email: 'info@steinscop.com',
+    practiceAreas: ['Commercial Litigation', 'Administrative Law', 'Procurement Law', 'Mining & Mineral Law', 'Banking & Finance', 'Construction Law'],
+  },
 ];
 
 export const consultants: TeamMember[] = [
@@ -189,6 +199,46 @@ export const associates: TeamMember[] = [
     image: '/marco-vieira.png',
     email: 'info@steinscop.com',
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial', 'Commercial Drafting'],
+  },
+  {
+    id: 'danita-mungaroo',
+    name: 'Danita Mungaroo',
+    title: 'Associate',
+    qualifications: 'BCom Law; LLB',
+    bio: 'Danita is an Associate in the firm’s Litigation Department. She has experience in a range of commercial litigation matters, including corporate and commercial disputes, contractual claims and regulatory disputes. Danita has assisted financial institutions, mining companies and regulatory bodies in complex, high-value and novel litigation matters.',
+    image: 'https://www.steinscop.com/wp-content/uploads/2026/08/image-e1785940619150-3.jpg',
+    email: 'info@steinscop.com',
+    practiceAreas: ['Commercial Litigation', 'Corporate Commercial', 'Regulatory Disputes', 'Contract Law'],
+  },
+  {
+    id: 'aaliyah-buksh',
+    name: 'Aaliyah Buksh',
+    title: 'Associate',
+    qualifications: 'BA Law; LLB',
+    bio: 'Aaliyah has extensive experience advising on complex commercial transactions, including mergers and acquisitions, private equity, and B-BBEE transactions across logistics, financial services, mining, energy, and retail. She is also experienced in commercial and general litigious matters, including mediation and settlement processes, and is a Member of the Young Arbitration Foundation of South Africa.',
+    image: 'https://www.steinscop.com/wp-content/uploads/2026/06/grayscale-image-1.png',
+    email: 'info@steinscop.com',
+    practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial', 'Private Equity', 'Commercial Litigation', 'Arbitration'],
+  },
+  {
+    id: 'alon-katz',
+    name: 'Alon Katz',
+    title: 'Associate',
+    qualifications: 'BCom Law; LLB',
+    bio: 'Alon was admitted as an attorney in September 2024 and practices in the commercial litigation department. Alon has experience in general commercial work, contractual disputes, and commercial litigation matters.',
+    image: 'https://www.steinscop.com/wp-content/uploads/2026/10/image-e1791141145703.jpg',
+    email: 'info@steinscop.com',
+    practiceAreas: ['Commercial Litigation', 'Corporate Commercial', 'Contract Law'],
+  },
+  {
+    id: 'jesse-hanekom',
+    name: 'Jesse Hanekom',
+    title: 'Associate',
+    qualifications: 'LLB',
+    bio: 'Jesse is an Associate within the firm’s Commercial Litigation Department. Jesse has experience in commercial litigation, labour law, municipal law, and general dispute resolution.',
+    image: 'https://www.steinscop.com/wp-content/uploads/2026/09/jesse-1.png',
+    email: 'info@steinscop.com',
+    practiceAreas: ['Commercial Litigation', 'Employment & Labour Law', 'Municipal Law', 'Dispute Resolution'],
   },
 ];
 

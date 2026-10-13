@@ -15,10 +15,10 @@ export default function InsightsPage() {
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
-        <title>Legal News &amp; Briefings | Stein Scop Attorneys Inc.</title>
+        <title>Insights | Stein Scop Attorneys</title>
         <meta name="description" content="Commercial law insights from Stein Scop Attorneys — covering M&A, employment law, litigation, insolvency, competition, mining, and more across South Africa." />
-        <meta property="og:title" content="Legal News &amp; Briefings | Stein Scop Attorneys Inc." />
-        <meta property="og:description" content="Expert commentary on South African commercial law from the directors of Stein Scop Attorneys Inc." />
+        <meta property="og:title" content="Insights | Stein Scop Attorneys" />
+        <meta property="og:description" content="Expert commentary on South African commercial law from the directors of Stein Scop Attorneys." />
       </Helmet>
 
       {/* Hero */}
@@ -100,9 +100,9 @@ export default function InsightsPage() {
                       <span>{article.date}</span>
                       <span>{article.readTime}</span>
                     </div>
-                    <h3 className="text-xl font-serif text-brand-primary leading-snug group-hover:text-brand-accent transition-colors duration-300">
+                    <h2 className="text-xl font-serif text-brand-primary leading-snug group-hover:text-brand-accent transition-colors duration-300">
                       {article.title}
-                    </h3>
+                    </h2>
                     <p className="text-sm text-brand-primary/60 font-light leading-relaxed">
                       {article.excerpt}
                     </p>

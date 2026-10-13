@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Mail, Phone } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { allMembers } from '../data/team';
 
 function splitBio(bio: string): string[] {
@@ -19,6 +20,9 @@ export default function TeamMemberPage() {
   if (!member) {
     return (
       <main className="min-h-screen bg-brand-cream flex items-center justify-center">
+        <Helmet>
+          <title>Team Member Not Found | Stein Scop Attorneys</title>
+        </Helmet>
         <div className="text-center space-y-4">
           <p className="text-brand-primary/40 uppercase tracking-widest text-xs">Profile not found</p>
           <Link to="/team" className="text-brand-accent underline text-sm">Back to Team</Link>
@@ -28,9 +32,18 @@ export default function TeamMemberPage() {
   }
 
   const [firstPara, secondPara] = splitBio(member.bio);
+  const metaDescription = member.bio.length > 155 ? `${member.bio.slice(0, 152).trim()}...` : member.bio;
 
   return (
     <main className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>{`${member.name} | ${member.title} | Stein Scop Attorneys`}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={`${member.name} | ${member.title} | Stein Scop Attorneys`} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="profile" />
+        <meta property="og:image" content={member.image.startsWith('http') ? member.image : `https://www.steinscop.com${member.image}`} />
+      </Helmet>
 
       {/* ── Hero split ──────────────────────────────────────────────── */}
       <section
@@ -90,7 +103,7 @@ export default function TeamMemberPage() {
         >
           <img
             src={member.image}
-            alt={`Portrait of ${member.name}`}
+            alt={`${member.name} - ${member.title}`}
             className="absolute inset-0 w-full h-full object-contain object-center"
           />
         </motion.div>

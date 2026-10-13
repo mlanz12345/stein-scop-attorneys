@@ -7,9 +7,9 @@ export default function CareersPage() {
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
-        <title>Careers | Stein Scop Attorneys Inc.</title>
-        <meta name="description" content="Join Stein Scop Attorneys Inc. — a high-performance commercial law firm in Sandton. We are looking for exceptional candidate attorneys, associates, and senior legal professionals." />
-        <meta property="og:title" content="Careers | Stein Scop Attorneys Inc." />
+        <title>Careers | Stein Scop Attorneys</title>
+        <meta name="description" content="Join Stein Scop Attorneys — a high-performance commercial law firm in Sandton. We are looking for exceptional candidate attorneys, associates, and senior legal professionals." />
+        <meta property="og:title" content="Careers | Stein Scop Attorneys" />
         <meta property="og:description" content="Build your legal career at Stein Scop Attorneys. Current openings for commercial associates and candidate attorneys in Sandton, Johannesburg." />
       </Helmet>
       {/* Hero */}

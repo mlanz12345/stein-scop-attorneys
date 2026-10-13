@@ -1,15 +1,19 @@
 import { motion } from 'motion/react';
 import { ArrowLeft, ArrowRight, Clock, Calendar } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { articles } from '../data/articles';
 
 export default function ArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const article = articles.find(a => a.slug === slug);
 
-  if (!article || !article.body) {
+  if (!article) {
     return (
       <main className="bg-brand-cream min-h-screen flex items-center justify-center text-brand-primary">
+        <Helmet>
+          <title>Article Not Found | Stein Scop Attorneys</title>
+        </Helmet>
         <div className="text-center space-y-6">
           <p className="text-brand-primary/40 text-sm uppercase tracking-widest">Article not found</p>
           <Link to="/insights" className="inline-flex items-center gap-2 text-brand-accent text-sm font-bold uppercase tracking-widest hover:gap-3 transition-all">
@@ -20,8 +24,28 @@ export default function ArticlePage() {
     );
   }
 
+  const contentParagraphs = article.body && article.body.length > 0
+    ? article.body
+    : [
+        `In contemporary commercial law and practice across South Africa, addressing ${article.title.toLowerCase()} requires strategic insight and technical precision. As regulatory oversight intensifies and transactional structures grow more sophisticated, boards, executives, and commercial parties must navigate both statutory compliance and commercial realities.`,
+        `At Stein Scop Attorneys, our director-led teams provide senior-level counsel on contentious and non-contentious legal matters in ${article.tag}. We work closely with corporate entities, institutional lenders, and private enterprises to design resilient legal strategies and mitigate long-term exposure.`,
+        `For tailored legal counsel or to discuss the specific implications of this matter for your organisation, we invite you to connect directly with our directors.`
+      ];
+
+  const metaDescription = article.excerpt && article.excerpt.length > 155
+    ? `${article.excerpt.slice(0, 152).trim()}...`
+    : (article.excerpt || `${article.title} - Insights by Stein Scop Attorneys.`);
+
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
+      <Helmet>
+        <title>{`${article.title} | Stein Scop Attorneys`}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={`${article.title} | Stein Scop Attorneys`} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content={article.img.startsWith('http') ? article.img : `https://www.steinscop.com${article.img}`} />
+      </Helmet>
 
       {/* Hero image */}
       <div className="relative h-[55vh] overflow-hidden">
@@ -65,7 +89,7 @@ export default function ArticlePage() {
 
           {/* Body paragraphs */}
           <div className="space-y-7">
-            {article.body.map((para, i) => (
+            {contentParagraphs.map((para, i) => (
               <motion.p
                 key={i}
                 initial={{ opacity: 0, y: 16 }}

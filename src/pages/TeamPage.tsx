@@ -30,7 +30,7 @@ function MemberCard({ member, index }: { member: TeamMember; index: number; key?
         >
           <img
             src={member.image}
-            alt={member.name}
+            alt={`${member.name} - ${member.title}`}
             className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 ease-out"
           />
         </motion.div>
@@ -146,9 +146,9 @@ export default function TeamPage() {
   return (
     <main className="pt-28 bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
-        <title>Our Team | Stein Scop Attorneys Inc.</title>
-        <meta name="description" content="Meet the directors, consultants, associates and candidate attorneys at Stein Scop Attorneys Inc. Every matter is led by a director from instruction to conclusion." />
-        <meta property="og:title" content="Our Team | Stein Scop Attorneys Inc." />
+        <title>Our Team | Stein Scop Attorneys</title>
+        <meta name="description" content="Meet the directors, consultants, associates and candidate attorneys at Stein Scop Attorneys. Every matter is led by a director from instruction to conclusion." />
+        <meta property="og:title" content="Our Team | Stein Scop Attorneys" />
         <meta property="og:description" content="Director-led legal team based in Sandton, Johannesburg. Meet Glenn Stein, Bradley Scop, and the full Stein Scop team." />
       </Helmet>
       
@@ -231,9 +231,9 @@ export default function TeamPage() {
               {/* Directors */}
               {filteredDirectors.length > 0 && (
                 <div id="directors" className="scroll-mt-28">
-                  <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
+                  <h2 className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Directors
-                  </p>
+                  </h2>
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredDirectors.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
@@ -245,9 +245,9 @@ export default function TeamPage() {
               {/* Consultants */}
               {filteredConsultants.length > 0 && (
                 <div id="consultants" className="scroll-mt-28 pt-14 border-t border-brand-border">
-                  <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
+                  <h2 className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Consultants
-                  </p>
+                  </h2>
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredConsultants.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
@@ -259,9 +259,9 @@ export default function TeamPage() {
               {/* Senior Associates */}
               {filteredSeniorAssociates.length > 0 && (
                 <div id="senior-associates" className="scroll-mt-28 pt-14 border-t border-brand-border">
-                  <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
+                  <h2 className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Senior Associates
-                  </p>
+                  </h2>
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredSeniorAssociates.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
@@ -273,9 +273,9 @@ export default function TeamPage() {
               {/* Associates */}
               {filteredAssociates.length > 0 && (
                 <div id="associates" className="scroll-mt-28 pt-14 border-t border-brand-border">
-                  <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
+                  <h2 className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Associates
-                  </p>
+                  </h2>
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredAssociates.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
@@ -287,9 +287,9 @@ export default function TeamPage() {
               {/* Candidate Attorneys */}
               {filteredCandidateAttorneys.length > 0 && (
                 <div id="candidate-attorneys" className="scroll-mt-28 pt-14 border-t border-brand-border">
-                  <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
+                  <h2 className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Candidate Attorneys
-                  </p>
+                  </h2>
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredCandidateAttorneys.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />
@@ -301,9 +301,9 @@ export default function TeamPage() {
               {/* Management */}
               {filteredManagement.length > 0 && (
                 <div id="management" className="scroll-mt-28 pt-14 border-t border-brand-border">
-                  <p className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
+                  <h2 className="text-sm uppercase tracking-[0.3em] text-brand-primary font-bold mb-8">
                     Management
-                  </p>
+                  </h2>
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
                     {filteredManagement.map((member, i) => (
                       <MemberCard key={member.id} member={member} index={i} />

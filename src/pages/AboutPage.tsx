@@ -6,9 +6,9 @@ export default function AboutPage() {
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
-        <title>About Us | Stein Scop Attorneys Inc.</title>
-        <meta name="description" content="Stein Scop Attorneys Inc. was founded by Glenn Stein and Bradley Scop on the conviction that clients deserve direct access to the most senior legal minds. A director-led commercial law firm in Sandton, Johannesburg." />
-        <meta property="og:title" content="About Us | Stein Scop Attorneys Inc." />
+        <title>About Us | Stein Scop Attorneys</title>
+        <meta name="description" content="Stein Scop Attorneys was founded by Glenn Stein and Bradley Scop on the conviction that clients deserve direct access to the most senior legal minds. A director-led commercial law firm in Sandton, Johannesburg." />
+        <meta property="og:title" content="About Us | Stein Scop Attorneys" />
         <meta property="og:description" content="Founded by Glenn Stein and Bradley Scop — a director-led commercial law firm headquartered in Sandton, advising across South Africa and the African continent." />
       </Helmet>
 
