@@ -201,6 +201,16 @@ export const associates: TeamMember[] = [
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial', 'Commercial Drafting'],
   },
   {
+    id: 'aaliyah-buksh',
+    name: 'Aaliyah Buksh',
+    title: 'Associate',
+    qualifications: 'BA Law; LLB',
+    bio: 'Aaliyah has extensive experience advising on complex commercial transactions, including mergers and acquisitions, private equity, and B-BBEE transactions across logistics, financial services, mining, energy, and retail. She is also experienced in commercial and general litigious matters, including mediation and settlement processes, and is a Member of the Young Arbitration Foundation of South Africa.',
+    image: 'https://www.steinscop.com/wp-content/uploads/2026/06/grayscale-image-1.png',
+    email: 'info@steinscop.com',
+    practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial', 'Private Equity', 'Commercial Litigation', 'Arbitration'],
+  },
+  {
     id: 'danita-mungaroo',
     name: 'Danita Mungaroo',
     title: 'Associate',
@@ -219,16 +229,6 @@ export const associates: TeamMember[] = [
     image: 'https://www.steinscop.com/wp-content/uploads/2026/10/image-e1791141145703.jpg',
     email: 'info@steinscop.com',
     practiceAreas: ['Commercial Litigation', 'Corporate Commercial', 'Contract Law'],
-  },
-  {
-    id: 'aaliyah-buksh',
-    name: 'Aaliyah Buksh',
-    title: 'Associate',
-    qualifications: 'BA Law; LLB',
-    bio: 'Aaliyah has extensive experience advising on complex commercial transactions, including mergers and acquisitions, private equity, and B-BBEE transactions across logistics, financial services, mining, energy, and retail. She is also experienced in commercial and general litigious matters, including mediation and settlement processes, and is a Member of the Young Arbitration Foundation of South Africa.',
-    image: 'https://www.steinscop.com/wp-content/uploads/2026/06/grayscale-image-1.png',
-    email: 'info@steinscop.com',
-    practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial', 'Private Equity', 'Commercial Litigation', 'Arbitration'],
   },
 ];
 
