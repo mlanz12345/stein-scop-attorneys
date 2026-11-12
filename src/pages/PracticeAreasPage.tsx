@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Editable } from '../components/Editable';
 
@@ -78,6 +79,18 @@ const practices = [
   },
 ];
 
+const practiceAreaTrackingNames: Record<string, string> = {
+  mergers: 'Mergers & Acquisitions',
+  deal_structuring: 'Deal & Transaction Structuring',
+  security: 'Securities Law',
+  insolvency: 'Insolvency and Business Rescue',
+  dispute: 'Dispute Resolution and Litigation',
+  antitrust: 'Competition Law',
+  comms: 'Communications & Technology',
+  mining: 'Mining Law',
+  employment: 'Employment and Labour',
+};
+
 export default function PracticeAreasPage() {
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
@@ -116,20 +129,22 @@ export default function PracticeAreasPage() {
         <div className="max-w-7xl mx-auto">
 
           {/* Section header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-8">
             <div>
-              <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold mb-4 block">Practice Areas</span>
-              <h2 className="text-5xl md:text-7xl font-serif text-brand-primary">
-                Areas of<br /><span className="italic">Expertise</span>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-accent font-bold mb-3 block">
+                Practice Areas
+              </span>
+              <h2 className="text-4xl md:text-6xl font-serif text-brand-primary">
+                Areas of <span className="italic">Expertise</span>
               </h2>
             </div>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] font-bold text-brand-primary hover:text-brand-accent transition-colors group"
+            <Link
+              to="/contact"
+              className="btn inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] font-bold text-brand-primary hover:text-brand-accent transition-colors pb-1 group"
             >
               Consult Our Team
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
 
           {/* Grid */}
@@ -141,13 +156,17 @@ export default function PracticeAreasPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.8 }}
-                className="group cursor-pointer"
+                className="group cursor-default flex flex-col h-full"
               >
                 {/* Image */}
                 <div className="aspect-video overflow-hidden mb-8 relative">
                   <img
                     src={practice.img}
                     alt={practice.title}
+                    loading="lazy"
+                    decoding="async"
+                    width={800}
+                    height={450}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-brand-primary/20 group-hover:bg-transparent transition-colors duration-500" />
@@ -159,23 +178,25 @@ export default function PracticeAreasPage() {
                 </div>
 
                 {/* Text */}
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-brand-primary/30">
-                    <span>Commercial Law</span>
-                    <span>{practice.detail}</span>
-                  </div>
+                <div className="space-y-4 flex-1 flex flex-col">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-brand-accent font-semibold leading-relaxed">
+                    {practice.detail}
+                  </p>
                   <h3 className="text-xl font-serif text-brand-primary leading-snug group-hover:text-brand-accent transition-colors duration-300">
                     <Editable id={`practice_title_${practice.id}`} defaultText={practice.title} />
                   </h3>
                   <p className="text-sm text-brand-primary/60 font-light leading-relaxed">
                     <Editable id={`practice_desc_${practice.id}`} defaultText={practice.desc} />
                   </p>
-                  <a
-                    href="/contact"
-                    className="pt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-accent group-hover:gap-3 transition-all duration-300"
-                  >
-                    Consult an Expert <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  <div className="pt-4 mt-auto">
+                    <Link
+                      to="/contact"
+                      className="btn inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-bold text-brand-accent group-hover:gap-3 transition-all duration-300"
+                      data-practice-area={practiceAreaTrackingNames[practice.id] || practice.title}
+                    >
+                      Consult an Expert <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
                 </div>
               </motion.article>
             ))}
@@ -184,15 +205,15 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* Why Us */}
-      <section className="py-14 px-12 lg:px-24 bg-brand-primary text-brand-cream">
-        <div className="max-w-4xl mx-auto text-center space-y-12">
-          <h2 className="text-4xl md:text-6xl font-serif leading-tight">
-            <Editable id="practice_why_title" defaultText="Why Prominent Firms" /><br />
+      <section className="py-8 md:py-10 px-6 md:px-12 lg:px-24 bg-brand-primary text-brand-cream border-t border-white/10">
+        <div className="max-w-3xl mx-auto text-center space-y-4">
+          <h2 className="text-3xl md:text-4xl font-serif leading-tight">
+            <Editable id="practice_why_title" defaultText="Why Prominent Firms" />{' '}
             <span className="italic">
               <Editable id="practice_why_title_2" defaultText="Choose Us" />
             </span>
           </h2>
-          <p className="text-brand-cream/70 text-lg md:text-xl font-light leading-relaxed">
+          <p className="text-brand-cream/70 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
             <Editable id="practice_why_desc" defaultText="We don't just quote the law; we apply it strategically to protect your interests. Our directors are directly involved in every matter, providing a level of seniority and insight that larger firms often delegate." />
           </p>
         </div>

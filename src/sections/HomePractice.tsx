@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { Link } from 'react-router-dom';
 
 const practices = [
   {
@@ -16,11 +17,6 @@ const practices = [
     id: 'banking',
     title: 'Banking and Finance',
     desc: 'Expertise in structured finance, regulatory compliance, and debt restructuring. We advise both lenders and borrowers — including leading financial institutions and development finance institutions — on sophisticated financial instruments and transactions.',
-  },
-  {
-    id: 'property',
-    title: 'Property and Conveyancing',
-    desc: 'Comprehensive legal support for real estate developments, commercial property transfers, and zoning regulations in the Gauteng region and beyond. We provide full-cycle advisory from zoning approvals through to sectional title conveyancing.',
   },
   {
     id: 'insolvency',
@@ -61,12 +57,12 @@ function PracticeCard({ p, i, isLast, nextTitle }: { p: typeof practices[0]; i: 
           {p.desc}
         </p>
         {isLast ? (
-          <a
-            href="/practice-areas"
-            className="inline-block mt-10 px-8 py-3 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:border-brand-accent hover:text-brand-accent transition-all duration-300"
+          <Link
+            to="/practice-areas"
+            className="btn inline-block mt-10 px-8 py-3 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:border-brand-accent hover:text-brand-accent transition-all duration-300"
           >
             See All Practice Areas
-          </a>
+          </Link>
         ) : (
           <p className="mt-8 text-[9px] uppercase tracking-[0.4em] text-brand-primary font-bold">
             Next — {nextTitle}
@@ -88,12 +84,12 @@ export default function HomePractice() {
               Featured Practice<br /><span className="italic">Areas</span>
             </h2>
           </div>
-          <a
-            href="/practice-areas"
+          <Link
+            to="/practice-areas"
             className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] font-bold text-brand-primary hover:text-brand-accent transition-colors"
           >
             All Practice Areas &rarr;
-          </a>
+          </Link>
         </div>
       </div>
 

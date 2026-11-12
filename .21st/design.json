@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "project": {
+    "name": "react-example",
+    "productType": null,
+    "stack": [
+      "react",
+      "tailwind-v4",
+      "vite"
+    ]
+  },
+  "sources": {
+    "tokens": [
+      "src/index.css"
+    ],
+    "components": [],
+    "assets": [],
+    "instructions": []
+  },
+  "design": {
+    "colorMode": "light",
+    "colors": {
+      "--color-brand-primary": {
+        "value": "#0a0f1a",
+        "source": "src/index.css"
+      },
+      "--color-brand-cream": {
+        "value": "#f4f6f8",
+        "source": "src/index.css"
+      },
+      "--color-brand-accent": {
+        "value": "#c5a67c",
+        "source": "src/index.css"
+      },
+      "--color-brand-text": {
+        "value": "#0f172a",
+        "source": "src/index.css"
+      },
+      "--color-brand-text-light": {
+        "value": "#475569",
+        "source": "src/index.css"
+      },
+      "--color-brand-border": {
+        "value": "#e2e8f0",
+        "source": "src/index.css"
+      },
+      "--color-brand-navy": {
+        "value": "#0a0f1a",
+        "source": "src/index.css"
+      },
+      "--color-brand-gold": {
+        "value": "#c5a67c",
+        "source": "src/index.css"
+      }
+    },
+    "typography": {
+      "--font-sans": {
+        "value": "\"Instrument Sans\", ui-sans-serif, system-ui, sans-serif",
+        "source": "src/index.css"
+      },
+      "--font-serif": {
+        "value": "\"Playfair Display\", serif",
+        "source": "src/index.css"
+      }
+    },
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": []
+  },
+  "decisions": [],
+  "evidence": [
+    {
+      "fact": "design.colorMode:light",
+      "source": "src/index.css"
+    },
+    {
+      "fact": "design.tokens",
+      "source": "src/index.css"
+    },
+    {
+      "fact": "project.stack:react",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:tailwind-v4",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:vite",
+      "source": "package.json"
+    }
+  ],
+  "generatedAt": "2026-10-25T07:51:41.723Z"
+}

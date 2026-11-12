@@ -1,43 +1,39 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search, X } from 'lucide-react';
 import { Editable } from '../components/Editable';
 import { directors, consultants, seniorAssociates, associates, candidateAttorneys, management, type TeamMember } from '../data/team';
+import { getAttorneys, urlFor } from '../sanity';
 
-function MemberCard({ member, index }: { member: TeamMember; index: number; key?: string }) {
+const MemberCard = React.memo(function MemberCard({ member, index }: { member: TeamMember; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ delay: index * 0.06, duration: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
-      className="group flex flex-col p-4 rounded-2xl border border-transparent hover:border-brand-accent/20 hover:bg-brand-cream/30 hover:-translate-y-0.5 transition-all duration-300 shadow-sm hover:shadow-md"
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ delay: (index % 4) * 0.05, duration: 0.45, ease: 'easeOut' }}
+      className="group flex flex-col p-4 rounded-2xl border border-transparent hover:border-brand-accent/20 hover:bg-brand-cream/30 transition-[background-color,border-color,box-shadow] duration-300 shadow-sm hover:shadow-md"
     >
       {/* ── Photo ──────────────────────────────── */}
       <Link
         to={`/team/${member.id}`}
-        className="block relative aspect-[3/4] overflow-hidden mb-4 bg-brand-primary/8 rounded-lg"
+        className="team-member block relative aspect-[3/4] overflow-hidden mb-4 bg-white rounded-lg border border-brand-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.03)] group-hover:border-brand-accent/40 group-hover:shadow-md transition-[border-color,box-shadow] duration-300"
+        data-member-name={member.name}
+        data-member-role={member.title}
       >
-        {/* Curtain reveal: motion.div clips the img from bottom to top */}
-        <motion.div
-          className="absolute inset-0"
-          initial={{ clipPath: 'inset(0 0 100% 0)' }}
-          whileInView={{ clipPath: 'inset(0 0 0% 0)' }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.06 + 0.1, duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-        >
-          <img
-            src={member.image}
-            alt={`${member.name} - ${member.title}`}
-            className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 ease-out"
-          />
-        </motion.div>
+        <img
+          src={member.image}
+          alt={`${member.name} - ${member.title}`}
+          loading={index < 4 ? 'eager' : 'lazy'}
+          decoding="async"
+          className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+        />
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-brand-primary/70 via-transparent to-transparent flex items-end p-4 rounded-lg">
-          <span className="flex items-center gap-1.5 text-white text-[9px] uppercase tracking-[2px] font-bold translate-y-3 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-brand-primary/60 via-transparent to-transparent flex items-end p-4 rounded-lg">
+          <span className="flex items-center gap-1.5 text-white text-[9px] uppercase tracking-[2px] font-bold translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
             View Profile <ArrowRight size={10} />
           </span>
         </div>
@@ -58,40 +54,123 @@ function MemberCard({ member, index }: { member: TeamMember; index: number; key?
 
       {/* Up to 2 practice tags */}
       <div className="flex flex-wrap gap-1.5 mb-auto">
-        {member.practiceAreas.slice(0, 2).map((area) => (
-          <span
-            key={area}
-            className="px-2.5 py-1 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-wider rounded-full text-center leading-normal"
-          >
-            {area}
-          </span>
-        ))}
+        {member.practiceAreas.slice(0, 2).map((area) => {
+          const cardLabel =
+            area === 'Competition Law & Regulatory Matters' ? 'Competition Law' : area;
+          return (
+            <span
+              key={area}
+              className="px-2.5 py-1 border border-brand-primary/30 text-brand-primary text-[10px] uppercase tracking-wider rounded-full text-center leading-normal"
+            >
+              {cardLabel}
+            </span>
+          );
+        })}
       </div>
 
       {/* Footer */}
       <div className="mt-4 pt-4 border-t border-brand-border">
         <Link
           to={`/team/${member.id}`}
-          className="text-[10px] uppercase tracking-[2px] font-bold text-brand-primary/60 flex items-center gap-1.5 hover:text-brand-accent transition-colors duration-300"
+          className="team-member text-[10px] uppercase tracking-[2px] font-bold text-brand-primary/60 flex items-center gap-1.5 hover:text-brand-accent transition-colors duration-300"
+          data-member-name={member.name}
+          data-member-role={member.title}
         >
           View Profile <ArrowRight size={11} />
         </Link>
       </div>
     </motion.div>
   );
-}
+});
 
 export default function TeamPage() {
   const [activeSection, setActiveSection] = useState('directors');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sanityMap, setSanityMap] = useState<Record<string, any>>({});
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleSearchTracking = (value: string) => {
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+    }
+    const query = value.trim();
+    if (!query) return;
+    searchTimer.current = setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        const w = window as any;
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({
+          event: 'site_search',
+          search_term: query,
+          page_path: window.location.pathname,
+        });
+      }
+    }, 500);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (searchTimer.current) {
+        clearTimeout(searchTimer.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    getAttorneys().then((data) => {
+      if (!active || !Array.isArray(data)) return;
+      const map: Record<string, any> = {};
+      for (const item of data) {
+        if (item.slug) map[item.slug] = item;
+      }
+      setSanityMap(map);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const {
+    liveDirectors,
+    liveConsultants,
+    liveSeniorAssociates,
+    liveAssociates,
+    liveCandidateAttorneys,
+    liveManagement,
+  } = useMemo(() => {
+    const mergeWithSanity = (list: TeamMember[]): TeamMember[] =>
+      list.map((m) => {
+        const live = sanityMap[m.id];
+        if (!live) return m;
+        const sanityCroppedUrl = live.image ? urlFor(live.image)?.auto('format').quality(90).url() : null;
+        return {
+          ...m,
+          name: live.name || m.name,
+          title: live.title || m.title,
+          qualifications: live.qualifications ?? m.qualifications,
+          practiceAreas: live.practiceAreas?.length ? live.practiceAreas : m.practiceAreas,
+          image: sanityCroppedUrl || live.imageUrl || m.image,
+        };
+      });
+
+    return {
+      liveDirectors: mergeWithSanity(directors),
+      liveConsultants: mergeWithSanity(consultants),
+      liveSeniorAssociates: mergeWithSanity(seniorAssociates),
+      liveAssociates: mergeWithSanity(associates),
+      liveCandidateAttorneys: mergeWithSanity(candidateAttorneys),
+      liveManagement: mergeWithSanity(management),
+    };
+  }, [sanityMap]);
 
   const teamSections = [
-    { id: 'directors', label: 'Directors', data: directors },
-    { id: 'consultants', label: 'Consultants', data: consultants },
-    { id: 'senior-associates', label: 'Senior Associates', data: seniorAssociates },
-    { id: 'associates', label: 'Associates', data: associates },
-    { id: 'candidate-attorneys', label: 'Candidate Attorneys', data: candidateAttorneys },
-    { id: 'management', label: 'Management', data: management },
+    { id: 'directors', label: 'Directors', data: liveDirectors },
+    { id: 'consultants', label: 'Consultants', data: liveConsultants },
+    { id: 'senior-associates', label: 'Senior Associates', data: liveSeniorAssociates },
+    { id: 'associates', label: 'Associates', data: liveAssociates },
+    { id: 'candidate-attorneys', label: 'Candidate Attorneys', data: liveCandidateAttorneys },
+    { id: 'management', label: 'Management', data: liveManagement },
   ];
 
   useEffect(() => {
@@ -128,12 +207,12 @@ export default function TeamPage() {
     );
   };
 
-  const filteredDirectors = filterMembers(directors);
-  const filteredConsultants = filterMembers(consultants);
-  const filteredSeniorAssociates = filterMembers(seniorAssociates);
-  const filteredAssociates = filterMembers(associates);
-  const filteredCandidateAttorneys = filterMembers(candidateAttorneys);
-  const filteredManagement = filterMembers(management);
+  const filteredDirectors = filterMembers(liveDirectors);
+  const filteredConsultants = filterMembers(liveConsultants);
+  const filteredSeniorAssociates = filterMembers(liveSeniorAssociates);
+  const filteredAssociates = filterMembers(liveAssociates);
+  const filteredCandidateAttorneys = filterMembers(liveCandidateAttorneys);
+  const filteredManagement = filterMembers(liveManagement);
 
   const totalMatches = 
     filteredDirectors.length +
@@ -144,7 +223,7 @@ export default function TeamPage() {
     filteredManagement.length;
 
   return (
-    <main className="pt-28 bg-brand-cream min-h-screen text-brand-primary">
+    <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
         <title>Our Team | Stein Scop Attorneys</title>
         <meta name="description" content="Meet the directors, consultants, associates and candidate attorneys at Stein Scop Attorneys. Every matter is led by a director from instruction to conclusion." />
@@ -153,19 +232,19 @@ export default function TeamPage() {
       </Helmet>
       
       {/* Hero section */}
-      <section className="pb-12 px-6 md:px-12 lg:px-24 bg-brand-cream">
+      <section className="pt-36 pb-12 px-6 md:px-12 lg:px-24 bg-brand-cream">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-5"
+            transition={{ duration: 1 }}
+            className="space-y-6"
           >
             <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold">
               <Editable id="team_header_tag" defaultText="The Team" />
             </span>
-            <h1 className="text-6xl md:text-8xl font-serif leading-tight">
+            <h1 className="text-6xl md:text-8xl font-serif leading-tight italic">
               <Editable id="team_header_title" defaultText="Our Experts" />
             </h1>
             <p className="text-xl font-light text-brand-primary/60 max-w-2xl leading-relaxed">
@@ -185,10 +264,15 @@ export default function TeamPage() {
               <Search size={18} />
             </span>
             <input
+              id="team-search"
               type="text"
               placeholder="Search experts by name, expertise, or title..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setSearchQuery(val);
+                handleSearchTracking(val);
+              }}
               className="w-full pl-11 pr-10 py-3 bg-white border border-brand-border rounded-full text-sm font-light text-brand-primary placeholder-brand-primary/45 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all shadow-sm"
             />
             {searchQuery && (
@@ -203,7 +287,7 @@ export default function TeamPage() {
 
           {/* Sticky Sub-Navigation */}
           {!searchQuery && (
-            <div className="sticky top-[72px] z-30 bg-white/95 backdrop-blur-sm border-b border-brand-border/60 py-4 mb-12 -mx-6 px-6 md:-mx-12 md:px-12 lg:-mx-24 lg:px-24 flex gap-6 overflow-x-auto no-scrollbar select-none">
+            <div className="sticky top-[72px] z-30 bg-white border-b border-brand-border/60 py-4 mb-12 -mx-6 px-6 md:-mx-12 md:px-12 lg:-mx-24 lg:px-24 flex gap-6 overflow-x-auto no-scrollbar select-none">
               {teamSections.map((sec) => {
                 const hasMembers = sec.data.length > 0;
                 if (!hasMembers) return null;
@@ -329,20 +413,22 @@ export default function TeamPage() {
       </section>
 
       {/* Join section */}
-      <section className="py-20 bg-brand-primary text-brand-cream px-12 lg:px-24">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h2 className="text-4xl md:text-5xl font-serif text-brand-cream">
+      <section className="py-12 md:py-16 bg-brand-primary text-brand-cream px-6 md:px-12 border-t border-white/10">
+        <div className="max-w-2xl mx-auto text-center space-y-4">
+          <h2 className="text-3xl md:text-4xl font-serif text-brand-cream">
             <Editable id="team_join_title" defaultText="Join a Team of Strategic Excellence" />
           </h2>
-          <p className="text-brand-cream/70 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-brand-cream/70 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-light">
             <Editable id="team_join_desc" defaultText="We are always looking for exceptional legal talent. If you have the drive and expertise to match our standards, we want to hear from you." />
           </p>
-          <a
-            href="/careers"
-            className="inline-block px-12 py-4 bg-brand-accent text-white uppercase tracking-[2px] text-[10px] font-bold rounded-full hover:scale-105 transition-transform"
-          >
-            Explore Careers
-          </a>
+          <div className="pt-2">
+            <a
+              href="/careers"
+              className="inline-block px-10 py-3.5 bg-brand-accent text-white uppercase tracking-[2px] text-[10px] font-bold rounded-full hover:scale-105 transition-transform"
+            >
+              Explore Careers
+            </a>
+          </div>
         </div>
       </section>
     </main>

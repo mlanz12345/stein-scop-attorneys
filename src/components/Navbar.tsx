@@ -15,6 +15,10 @@ export default function Navbar() {
     setIsScrolled(latest > 100);
   });
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   // Secret admin shortcut: Ctrl+Shift+E
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -31,19 +35,34 @@ export default function Navbar() {
     { name: 'About', href: '/about' },
     { name: 'Practice Areas', href: '/practice-areas' },
     { name: 'Our Team', href: '/team' },
-    { name: 'Insights', href: '/insights' },
     { name: 'Careers', href: '/careers' },
     { name: 'Contact', href: '/contact' },
   ];
 
-  const isTransparent = !isScrolled && location.pathname === '/';
+  const knownLightPages = [
+    '/about',
+    '/practice-areas',
+    '/team',
+    '/careers',
+    '/contact',
+    '/privacy',
+  ];
+  const isLightPage = knownLightPages.some(
+    (path) => location.pathname === path || location.pathname.startsWith('/team/')
+  );
+  const isDarkPage = !isLightPage;
+  const isTransparent = !isScrolled && isDarkPage;
 
   return (
     <motion.nav
       animate={{
         height: isScrolled ? 72 : 100,
         backgroundColor: isScrolled ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0)',
-        borderColor: isScrolled ? 'rgba(226,232,240,1)' : 'rgba(226,232,240,0)',
+        borderColor: isScrolled
+          ? 'rgba(226,232,240,1)'
+          : isDarkPage
+            ? 'rgba(255,255,255,0.08)'
+            : 'rgba(226,232,240,0)',
         boxShadow: isScrolled ? '0 1px 3px 0 rgb(0 0 0 / 0.1)' : 'none',
       }}
       className="fixed top-0 left-0 w-full z-50 px-8 lg:px-16 flex justify-between items-center border-b"
@@ -55,7 +74,9 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           src="/logo-new.png"
           alt="Stein Scop"
-          fetchPriority="high"
+          width={978}
+          height={271}
+          decoding="async"
           className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${
             isTransparent ? 'brightness-100' : 'brightness-0'
           }`}
@@ -73,7 +94,7 @@ export default function Navbar() {
           >
             <Link
               to={link.href}
-              className={`text-[12px] font-semibold uppercase tracking-[1px] hover:text-brand-accent transition-colors ${
+              className={`nav-link text-[12px] font-semibold uppercase tracking-[1px] hover:text-brand-accent transition-colors ${
                 isTransparent ? 'text-white/90' : 'text-brand-text'
               } ${location.pathname === link.href ? 'text-brand-accent' : ''}`}
             >
@@ -87,7 +108,7 @@ export default function Navbar() {
       <div className="hidden md:flex items-center gap-3">
         <a
           href="tel:+27113808080"
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[1.5px] transition-all duration-500 ${
+          className={`btn flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[1.5px] transition-all duration-500 ${
             isTransparent
               ? 'bg-white/10 text-white border border-white/20 hover:bg-white hover:text-brand-primary'
               : 'bg-brand-primary text-white hover:bg-brand-accent'
@@ -102,6 +123,7 @@ export default function Navbar() {
       <div className="md:hidden">
         <button
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle navigation menu"
           className={isTransparent ? 'text-white' : 'text-brand-primary'}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -113,14 +135,18 @@ export default function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute top-full left-0 w-full bg-white p-8 flex flex-col space-y-5 md:hidden border-b border-brand-border shadow-xl text-brand-primary"
+          className={`absolute top-full left-0 w-full p-8 flex flex-col space-y-5 md:hidden border-b shadow-2xl transition-colors ${
+            isDarkPage && !isScrolled
+              ? 'bg-[#0a111a] border-white/10 text-white'
+              : 'bg-white border-brand-border text-brand-primary'
+          }`}
         >
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.href}
               onClick={() => setIsOpen(false)}
-              className={`text-sm font-semibold uppercase tracking-[1px] hover:text-brand-accent transition-colors ${
+              className={`nav-link text-sm font-semibold uppercase tracking-[1px] hover:text-brand-accent transition-colors ${
                 location.pathname === link.href ? 'text-brand-accent' : ''
               }`}
             >

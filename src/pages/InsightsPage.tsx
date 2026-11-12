@@ -31,8 +31,8 @@ export default function InsightsPage() {
             className="space-y-6"
           >
             <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold">Legal News &amp; Info</span>
-            <h1 className="text-6xl md:text-8xl font-serif leading-tight">
-              News &amp; <span className="italic">Briefings</span>
+            <h1 className="text-6xl md:text-8xl font-serif leading-tight italic">
+              News &amp; Briefings
             </h1>
             <p className="text-xl font-light text-brand-primary/60 max-w-2xl leading-relaxed">
               Perspectives on commercial law, litigation strategy, and the legal developments shaping South African business.

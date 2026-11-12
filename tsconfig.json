@@ -21,6 +21,19 @@
       ]
     },
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "types": [
+      "node",
+      "vite/client"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "sanity/**/*",
+    "node_modules",
+    "dist",
+    "dist-ssr"
+  ]
 }

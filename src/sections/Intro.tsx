@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { Editable } from '../components/Editable';
 
 export default function Intro() {
@@ -32,12 +33,12 @@ export default function Intro() {
             </div>
 
             <div className="mt-16">
-              <a
-                href="/about"
-                className="inline-block px-10 py-4 border-2 border-brand-primary text-brand-primary uppercase tracking-[2px] text-[11px] font-bold rounded-full hover:bg-brand-primary hover:text-brand-cream transition-all duration-300"
+              <Link
+                to="/about"
+                className="btn inline-block px-10 py-4 border-2 border-brand-primary text-brand-primary uppercase tracking-[2px] text-[11px] font-bold rounded-full hover:bg-brand-primary hover:text-brand-cream transition-all duration-300"
               >
                 More About Us
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -52,11 +53,18 @@ export default function Intro() {
           whileHover={{ scale: 1.02 }}
         >
           <div className="aspect-[4/5] overflow-hidden rounded-t-[100px] md:rounded-t-[200px] shadow-2xl transition-all duration-700 group-hover:shadow-brand-accent/10">
-            <img
-              src="/chess.png"
-              alt="Stein Scop strategic approach"
-              className="w-full h-full object-cover ken-burns transition-all duration-700 group-hover:scale-105"
-            />
+            <picture>
+              <source type="image/avif" srcSet="/chess.avif" />
+              <img
+                src="/chess.png"
+                alt="Stein Scop strategic approach"
+                loading="lazy"
+                decoding="async"
+                width={1224}
+                height={822}
+                className="w-full h-full object-cover ken-burns transition-all duration-700 group-hover:scale-105"
+              />
+            </picture>
           </div>
           <div className="absolute inset-0 border border-brand-primary/10 rounded-t-[100px] md:rounded-t-[200px] pointer-events-none group-hover:border-brand-accent/30 transition-colors duration-500" />
         </motion.div>

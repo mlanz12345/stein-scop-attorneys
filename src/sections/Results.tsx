@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { Editable } from '../components/Editable';
 
 const cases = [
@@ -47,167 +48,130 @@ const cases = [
   },
 ];
 
-const numVariants = {
-  initial: (dir: number) => ({ y: dir * 40, opacity: 0 }),
-  animate: { y: 0, opacity: 1 },
-  exit:    (dir: number) => ({ y: dir * -40, opacity: 0 }),
-};
+function CaseCard({
+  item,
+  i,
+  isLast,
+  nextTitle,
+}: {
+  item: typeof cases[0];
+  i: number;
+  isLast: boolean;
+  nextTitle?: string;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
 
-export default function Results() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const activeIndexRef = useRef(0);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  // Track scroll progress of this card relative to the top of the viewport
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ['start start', 'end start'],
+  });
 
-  useEffect(() => {
-    const container = scrollRef.current;
-
-    const handleScroll = () => {
-      const isMobile = window.innerWidth < 1024; // lg breakpoint
-      let newIndex = 0;
-
-      if (isMobile) {
-        // Track relative to window viewport (30% from the top)
-        const triggerY = window.innerHeight * 0.3;
-        itemRefs.current.forEach((ref, i) => {
-          if (!ref) return;
-          const rect = ref.getBoundingClientRect();
-          if (rect.top <= triggerY) {
-            newIndex = i;
-          }
-        });
-      } else {
-        if (!container) return;
-        const containerTop = container.getBoundingClientRect().top;
-        const triggerY = containerTop + container.clientHeight * 0.15;
-        itemRefs.current.forEach((ref, i) => {
-          if (!ref) return;
-          if (ref.getBoundingClientRect().top <= triggerY) newIndex = i;
-        });
-      }
-
-      if (newIndex !== activeIndexRef.current) {
-        setDirection(newIndex > activeIndexRef.current ? 1 : -1);
-        activeIndexRef.current = newIndex;
-        setActiveIndex(newIndex);
-      }
-    };
-
-    if (container) {
-      container.addEventListener('scroll', handleScroll, { passive: true });
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Initial check
-    handleScroll();
-
-    return () => {
-      if (container) {
-        container.removeEventListener('scroll', handleScroll);
-      }
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // Scale down slightly and dim as it gets covered by the next card
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.55]);
 
   return (
-    <section
-      id="results"
-      className="bg-black text-white flex flex-col lg:h-screen lg:overflow-hidden relative"
+    <div
+      ref={cardRef}
+      className="sticky top-0 bg-black border-t border-white/15 px-6 md:px-12 lg:px-24 pt-24 lg:pt-28 pb-20 lg:pb-24 origin-top"
+      style={{ zIndex: i + 1 }}
     >
-      {/* Header */}
-      <div className="px-6 md:px-12 lg:px-24 pt-28 pb-4 shrink-0">
-        <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold block mb-4">
-          <Editable id="results_tag" defaultText="Track Record" />
-        </span>
-        <h2
-          className="text-5xl md:text-6xl font-serif text-white leading-tight"
-          style={{ letterSpacing: '-0.02em' }}
-        >
-          <Editable id="results_title" defaultText="Proven Results" />
-        </h2>
-      </div>
-
-      {/* Body */}
-      <div className="flex flex-col lg:flex-row flex-1 overflow-visible lg:overflow-hidden px-6 md:px-12 lg:px-24 relative">
-
-        {/* Left — static number, clipped to column width */}
-        <div className="hidden lg:flex w-[38%] shrink-0 items-start pt-6 overflow-hidden select-none">
-          <AnimatePresence mode="wait" custom={direction}>
+      <motion.div style={{ scale, opacity }} className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 lg:gap-16">
+          {/* Large Numerals — reveals in crisp white as user scrolls to each section */}
+          <div className="lg:w-1/4 shrink-0 overflow-hidden">
             <motion.span
-              key={activeIndex}
-              custom={direction}
-              variants={numVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.28, ease: [0.76, 0, 0.24, 1] }}
-              className="block font-sans font-bold text-white leading-none"
-              style={{ fontSize: 'clamp(5rem, 11vw, 11rem)', letterSpacing: '-0.04em' }}
+              initial={i === 0 ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              className="block font-sans font-bold text-white leading-none select-none drop-shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
+              style={{ fontSize: 'clamp(4.5rem, 9vw, 9rem)', letterSpacing: '-0.04em' }}
             >
-              {String(activeIndex + 1).padStart(2, '0')}
+              {String(i + 1).padStart(2, '0')}
             </motion.span>
-          </AnimatePresence>
-        </div>
-
-        {/* Right — scrollable records with fade mask */}
-        <div className="w-full lg:w-[62%] relative lg:h-full flex flex-col overflow-visible">
-          {/* Mobile Sticky Counter */}
-          <div className="lg:hidden sticky top-[80px] z-30 self-end bg-brand-primary/90 backdrop-blur-md border border-white/10 rounded-full px-4 py-1.5 flex items-center shadow-lg font-sans mr-2 -mb-8">
-            <span className="text-sm font-bold text-white tracking-tight">
-              {String(activeIndex + 1).padStart(2, '0')}
-            </span>
-            <span className="text-white/30 text-[10px] font-light tracking-widest ml-1.5">
-              / {String(cases.length).padStart(2, '0')}
-            </span>
           </div>
 
-          {/* Subtle edge fades for smooth entry/exit */}
-          <div className="hidden lg:block absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
-          <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
+          {/* Case Content */}
+          <div className="lg:w-3/4 flex-1">
+            {/* Tag + Outcome */}
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-white/50 font-medium">
+                {item.tag}
+              </span>
+              <span className="w-px h-3 bg-white/20" />
+              <span className="text-[10px] uppercase tracking-[0.25em] text-brand-accent font-medium">
+                {item.outcome}
+              </span>
+            </div>
 
-          <div
-            ref={scrollRef}
-            className="lg:overflow-y-auto lg:no-scrollbar lg:h-full flex-1 overflow-visible h-auto"
-          >
-            {cases.map((item, i) => (
-              <div
-                key={item.id}
-                ref={(el) => { itemRefs.current[i] = el; }}
-                className="py-14 px-6 -mx-6 rounded-xl border-t border-white/[0.08] first:border-t-0 hover:bg-white/[0.02] transition-all duration-500 group/case"
+            {/* Title */}
+            <h3
+              className="text-3xl md:text-5xl font-serif lining-nums text-white mb-6 leading-tight max-w-3xl"
+              style={{ letterSpacing: '-0.02em' }}
+            >
+              <Editable id={`result_title_${item.id}`} defaultText={item.title} />
+            </h3>
+
+            {/* Description */}
+            <p className="text-base md:text-lg text-white/70 font-light leading-relaxed max-w-2xl">
+              <Editable id={`result_desc_${item.id}`} defaultText={item.desc} />
+            </p>
+
+            {/* Next or CTA */}
+            {isLast ? (
+              <Link
+                to="/contact"
+                className="btn inline-block mt-10 px-8 py-3 border border-brand-accent/50 text-brand-accent text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:bg-brand-accent hover:text-brand-primary transition-all duration-300"
               >
-                {/* Tag + outcome */}
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-[9px] uppercase tracking-[0.35em] text-white/30 font-medium group-hover/case:text-white/50 transition-colors duration-300">
-                    {item.tag}
-                  </span>
-                  <span className="w-px h-3 bg-white/15" />
-                  <span className="text-[9px] uppercase tracking-[0.25em] text-brand-accent font-medium">
-                    {item.outcome}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3
-                  className="text-3xl md:text-4xl font-serif lining-nums text-white mb-4 leading-tight group-hover/case:text-brand-accent group-hover/case:translate-x-1 transition-all duration-300"
-                  style={{ letterSpacing: '-0.02em' }}
-                >
-                  <Editable id={`result_title_${item.id}`} defaultText={item.title} />
-                </h3>
-
-                {/* Description */}
-                <p className="text-sm text-white/40 font-light max-w-lg group-hover/case:text-white/60 transition-colors duration-300" style={{ lineHeight: 1.75 }}>
-                  <Editable id={`result_desc_${item.id}`} defaultText={item.desc} />
-                </p>
-              </div>
-            ))}
-
-            {/* Spacer so the last item can scroll past the trigger */}
-            <div className="hidden lg:block h-[40vh]" />
-            <div className="lg:hidden h-[10vh]" />
+                Discuss Your Matter &rarr;
+              </Link>
+            ) : (
+              <p className="mt-10 text-[10px] uppercase tracking-[0.4em] text-brand-accent font-bold">
+                Next — {nextTitle}
+              </p>
+            )}
           </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+export default function Results() {
+  return (
+    <section id="results" className="relative bg-black text-white">
+      {/* Header */}
+      <div className="bg-black py-16 lg:py-20 px-6 md:px-12 lg:px-24 border-t border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold block mb-4">
+              <Editable id="results_tag" defaultText="Track Record" />
+            </span>
+            <h2
+              className="text-5xl md:text-7xl font-serif text-white leading-tight"
+              style={{ letterSpacing: '-0.02em' }}
+            >
+              <Editable id="results_title" defaultText="Proven Results" />
+            </h2>
+          </div>
+          <span className="text-[11px] uppercase tracking-[0.3em] font-bold text-white/40">
+            Selected Case Outcomes
+          </span>
         </div>
       </div>
+
+      {/* Sticky stacking cards — each card slides over the previous with progressive depth transitions */}
+      {cases.map((item, i) => (
+        <CaseCard
+          key={item.id}
+          item={item}
+          i={i}
+          isLast={i === cases.length - 1}
+          nextTitle={i < cases.length - 1 ? cases[i + 1].title : undefined}
+        />
+      ))}
     </section>
   );
 }

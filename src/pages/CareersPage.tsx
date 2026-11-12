@@ -1,10 +1,82 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Editable } from '../components/Editable';
 import { Send, MapPin, Clock, Briefcase, Mail, ArrowRight, GraduationCap } from 'lucide-react';
+import { getCareerProgrammes, getPageSeo, type CareerProgrammeData, type PageSeoData } from '../sanity';
+
+const defaultProgrammes: CareerProgrammeData[] = [
+  {
+    title: 'Articles of Clerkship',
+    slug: 'articles-2028',
+    statusBadge: '2027 Closed · 2028 Open',
+    location: 'Sandton',
+    duration: 'Two-Year Contract',
+    audience: 'Candidate Attorney',
+    notice: 'Kindly note that applications for articles of clerkship commencing in 2027 have closed.',
+    description:
+      'If you are interested in applying for articles of clerkship commencing in 2028, kindly send your CV and full academic transcript to admissions@steinscop.com or use the online application form via the Apply Now button.',
+    admissionsEmail: 'admissions@steinscop.com',
+    emailSubject: 'Application: Articles of Clerkship 2028',
+    emailBody:
+      'Dear Admissions Team,\n\nPlease find attached my CV and full academic transcript for consideration for Articles of Clerkship commencing in 2028.\n\nKind regards,',
+  },
+  {
+    title: 'Winter Vacation Programme',
+    slug: 'winter-vac-2027',
+    statusBadge: '2026 Closed · 2027 Open',
+    location: 'Sandton',
+    duration: 'Vacation Programme',
+    audience: 'Law Students',
+    notice: 'Kindly note that applications for our winter vacation work programme for 2026 have closed.',
+    description:
+      'If you are interested in applying for our winter vacation work programme for 2027, kindly send your CV and full academic transcript to admissions@steinscop.com or use the online application form via the Apply Now button.',
+    admissionsEmail: 'admissions@steinscop.com',
+    emailSubject: 'Application: Winter Vacation Programme 2027',
+    emailBody:
+      'Dear Admissions Team,\n\nPlease find attached my CV and full academic transcript for consideration for the Winter Vacation Work Programme commencing in 2027.\n\nKind regards,',
+  },
+];
+
+function formatDescriptionWithEmail(text: string, email: string) {
+  if (!text.includes(email)) return text;
+  const parts = text.split(email);
+  return (
+    <>
+      {parts[0]}
+      <a
+        href={`mailto:${email}`}
+        className="font-semibold text-brand-accent underline underline-offset-4 hover:text-brand-primary transition-colors"
+      >
+        {email}
+      </a>
+      {parts.slice(1).join(email)}
+    </>
+  );
+}
 
 export default function CareersPage() {
+  const [programmes, setProgrammes] = useState<CareerProgrammeData[]>(defaultProgrammes);
+  const [pageHero, setPageHero] = useState<PageSeoData | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    getCareerProgrammes().then((data) => {
+      if (active && data && data.length > 0) {
+        setProgrammes(data);
+      }
+    });
+    getPageSeo('careers').then((data) => {
+      if (active && data) {
+        setPageHero(data);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <main className="bg-brand-cream min-h-screen text-brand-primary">
       <Helmet>
@@ -14,24 +86,24 @@ export default function CareersPage() {
         <meta property="og:description" content="Build your legal career at Stein Scop Attorneys. Current openings for commercial associates and candidate attorneys in Sandton, Johannesburg." />
       </Helmet>
       {/* Hero */}
-      <section className="pt-36 pb-12 px-12 lg:px-24">
+      <section className="pt-36 pb-12 px-6 md:px-12 lg:px-24 bg-brand-cream">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="space-y-8"
+            className="space-y-6"
           >
             <span className="text-xs uppercase tracking-[0.4em] text-brand-accent font-bold">
-              <Editable id="careers_hero_tag" defaultText="Opportunities" />
+              <Editable id="careers_hero_tag" defaultText={pageHero?.heroTag || "Opportunities"} />
             </span>
             <h1 className="text-6xl md:text-8xl font-serif leading-tight italic">
-              <Editable id="careers_hero_title" defaultText="Join Our Legacy" />
+              <Editable id="careers_hero_title" defaultText={pageHero?.heroTitle || "Join Our Legacy"} />
             </h1>
-            <p className="text-xl md:text-2xl font-light text-brand-primary/70 max-w-3xl leading-relaxed">
-              <Editable id="careers_hero_desc" defaultText="Build your professional future with a firm that values strategic thinking, commercial acumen, and relentless dedication to client outcomes." />
+            <p className="text-xl font-light text-brand-primary/60 max-w-2xl leading-relaxed">
+              <Editable id="careers_hero_desc" defaultText={pageHero?.heroSubtitle || "Build your professional future with a firm that values strategic thinking, commercial acumen, and relentless dedication to client outcomes."} />
             </p>
-            <div className="w-24 h-1 bg-brand-accent" />
+            <div className="w-16 h-px bg-brand-accent" />
           </motion.div>
         </div>
       </section>
@@ -64,7 +136,9 @@ export default function CareersPage() {
             </p>
             <a 
               href="mailto:admissions@steinscop.com?subject=Speculative%20Application%20-%20Stein%20Scop%20Attorneys" 
-              className="inline-flex items-center gap-4 px-12 py-5 bg-brand-accent text-white uppercase tracking-[2px] text-[10px] font-bold rounded-full hover:scale-105 transition-all shadow-xl"
+              className="career-apply btn inline-flex items-center gap-4 px-12 py-5 bg-brand-accent text-white uppercase tracking-[2px] text-[10px] font-bold rounded-full hover:scale-105 transition-all shadow-xl"
+              data-programme="speculative"
+              data-application-type="email_direct"
             >
               Send Your CV <Send size={14} />
             </a>
@@ -84,89 +158,80 @@ export default function CareersPage() {
           </div>
           
           <div className="space-y-8">
-            {/* Articles of Clerkship */}
-            <div className="p-8 md:p-12 rounded-3xl border border-brand-border/80 bg-brand-cream/15 hover:border-brand-accent/40 transition-all duration-300 shadow-sm">
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-brand-border/60">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="text-2xl md:text-3xl font-serif text-brand-primary">Articles of Clerkship</h3>
-                    <span className="px-3 py-1 bg-amber-500/10 text-amber-800 border border-amber-500/20 text-[10px] uppercase font-bold tracking-wider rounded-full">
-                      2027 Closed · 2028 Open
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-5 text-xs text-brand-primary/50 uppercase tracking-widest pt-1">
-                    <span className="flex items-center gap-2"><MapPin size={13} className="text-brand-accent" /> Sandton</span>
-                    <span className="flex items-center gap-2"><Clock size={13} className="text-brand-accent" /> Two-Year Contract</span>
-                    <span className="flex items-center gap-2"><Briefcase size={13} className="text-brand-accent" /> Candidate Attorney</span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <Link
-                    to="/contact?type=careers&programme=articles-2028"
-                    className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-brand-primary text-brand-cream text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:bg-brand-accent transition-all duration-300 shadow-sm"
-                  >
-                    Apply Now <ArrowRight size={13} />
-                  </Link>
-                  <a
-                    href="mailto:admissions@steinscop.com?subject=Application%3A%20Articles%20of%20Clerkship%202028&body=Dear%20Admissions%20Team%2C%0A%0APlease%20find%20attached%20my%20CV%20and%20full%20academic%20transcript%20for%20consideration%20for%20Articles%20of%20Clerkship%20commencing%20in%202028.%0A%0AKind%20regards%2C"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 border border-brand-border/80 text-brand-primary/70 hover:text-brand-primary hover:border-brand-accent text-[10px] uppercase tracking-[2px] font-bold rounded-full transition-all duration-300"
-                  >
-                    <Mail size={13} /> Email Direct
-                  </a>
-                </div>
-              </div>
-              
-              <div className="pt-6 space-y-3.5 max-w-4xl text-brand-primary/75 font-light leading-relaxed text-sm md:text-base">
-                <p className="text-brand-primary/80 font-medium">
-                  Kindly note that applications for articles of clerkship commencing in 2027 have closed.
-                </p>
-                <p>
-                  If you are interested in applying for articles of clerkship commencing in 2028, kindly send your CV and full academic transcript to <a href="mailto:admissions@steinscop.com" className="font-semibold text-brand-accent underline underline-offset-4 hover:text-brand-primary transition-colors">admissions@steinscop.com</a> or use the online application form via the Apply Now button.
-                </p>
-              </div>
-            </div>
+            {programmes.map((prog) => {
+              const email = prog.admissionsEmail || 'admissions@steinscop.com';
+              const subject = prog.emailSubject || `Application: ${prog.title}`;
+              const body =
+                prog.emailBody ||
+                `Dear Admissions Team,\n\nPlease find attached my CV and full academic transcript for consideration for ${prog.title}.\n\nKind regards,`;
+              const AudienceIcon = prog.audience?.toLowerCase().includes('student') ? GraduationCap : Briefcase;
+              const programmeKey =
+                prog.slug?.toLowerCase().includes('vac') || prog.title?.toLowerCase().includes('vacation')
+                  ? 'vacation'
+                  : 'articles';
 
-            {/* Winter Vacation Programme */}
-            <div className="p-8 md:p-12 rounded-3xl border border-brand-border/80 bg-brand-cream/15 hover:border-brand-accent/40 transition-all duration-300 shadow-sm">
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-brand-border/60">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="text-2xl md:text-3xl font-serif text-brand-primary">Winter Vacation Programme</h3>
-                    <span className="px-3 py-1 bg-amber-500/10 text-amber-800 border border-amber-500/20 text-[10px] uppercase font-bold tracking-wider rounded-full">
-                      2026 Closed · 2027 Open
-                    </span>
+              return (
+                <div
+                  key={prog.slug}
+                  className="p-8 md:p-12 rounded-3xl border border-brand-border/80 bg-brand-cream/15 hover:border-brand-accent/40 transition-all duration-300 shadow-sm"
+                >
+                  <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-brand-border/60">
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <h3 className="text-2xl md:text-3xl font-serif text-brand-primary">{prog.title}</h3>
+                        {prog.statusBadge && (
+                          <span className="px-3 py-1 bg-amber-500/10 text-amber-800 border border-amber-500/20 text-[10px] uppercase font-bold tracking-wider rounded-full">
+                            {prog.statusBadge}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap gap-5 text-xs text-brand-primary/50 uppercase tracking-widest pt-1">
+                        {prog.location && (
+                          <span className="flex items-center gap-2">
+                            <MapPin size={13} className="text-brand-accent" /> {prog.location}
+                          </span>
+                        )}
+                        {prog.duration && (
+                          <span className="flex items-center gap-2">
+                            <Clock size={13} className="text-brand-accent" /> {prog.duration}
+                          </span>
+                        )}
+                        {prog.audience && (
+                          <span className="flex items-center gap-2">
+                            <AudienceIcon size={13} className="text-brand-accent" /> {prog.audience}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <Link
+                        to={`/contact?type=careers&programme=${encodeURIComponent(prog.slug)}`}
+                        className="career-apply btn inline-flex items-center gap-2.5 px-8 py-3.5 bg-brand-primary text-brand-cream text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:bg-brand-accent transition-all duration-300 shadow-sm"
+                        data-programme={programmeKey}
+                        data-application-type="apply_now"
+                      >
+                        Apply Now <ArrowRight size={13} />
+                      </Link>
+                      <a
+                        href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}
+                        className="career-apply inline-flex items-center gap-2 px-6 py-3.5 border border-brand-border/80 text-brand-primary/70 hover:text-brand-primary hover:border-brand-accent text-[10px] uppercase tracking-[2px] font-bold rounded-full transition-all duration-300"
+                        data-programme={programmeKey}
+                        data-application-type="email_direct"
+                      >
+                        <Mail size={13} /> Email Direct
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-5 text-xs text-brand-primary/50 uppercase tracking-widest pt-1">
-                    <span className="flex items-center gap-2"><MapPin size={13} className="text-brand-accent" /> Sandton</span>
-                    <span className="flex items-center gap-2"><Clock size={13} className="text-brand-accent" /> Vacation Programme</span>
-                    <span className="flex items-center gap-2"><GraduationCap size={13} className="text-brand-accent" /> Law Students</span>
+
+                  <div className="pt-6 space-y-3.5 max-w-4xl text-brand-primary/75 font-light leading-relaxed text-sm md:text-base">
+                    {prog.notice && (
+                      <p className="text-brand-primary/80 font-medium">{prog.notice}</p>
+                    )}
+                    <p>{formatDescriptionWithEmail(prog.description, email)}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <Link
-                    to="/contact?type=careers&programme=winter-vac-2027"
-                    className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-brand-primary text-brand-cream text-[10px] uppercase tracking-[2px] font-bold rounded-full hover:bg-brand-accent transition-all duration-300 shadow-sm"
-                  >
-                    Apply Now <ArrowRight size={13} />
-                  </Link>
-                  <a
-                    href="mailto:admissions@steinscop.com?subject=Application%3A%20Winter%20Vacation%20Programme%202027&body=Dear%20Admissions%20Team%2C%0A%0APlease%20find%20attached%20my%20CV%20and%20full%20academic%20transcript%20for%20consideration%20for%20the%20Winter%20Vacation%20Work%20Programme%20commencing%20in%202027.%0A%0AKind%20regards%2C"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 border border-brand-border/80 text-brand-primary/70 hover:text-brand-primary hover:border-brand-accent text-[10px] uppercase tracking-[2px] font-bold rounded-full transition-all duration-300"
-                  >
-                    <Mail size={13} /> Email Direct
-                  </a>
-                </div>
-              </div>
-              
-              <div className="pt-6 space-y-3.5 max-w-4xl text-brand-primary/75 font-light leading-relaxed text-sm md:text-base">
-                <p className="text-brand-primary/80 font-medium">
-                  Kindly note that applications for our winter vacation work programme for 2026 have closed.
-                </p>
-                <p>
-                  If you are interested in applying for our winter vacation work programme for 2027, kindly send your CV and full academic transcript to <a href="mailto:admissions@steinscop.com" className="font-semibold text-brand-accent underline underline-offset-4 hover:text-brand-primary transition-colors">admissions@steinscop.com</a> or use the online application form via the Apply Now button.
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>

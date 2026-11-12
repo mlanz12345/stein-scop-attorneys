@@ -1,6 +1,47 @@
 {
+  "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/our-team",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/our-team/:name*",
+      "destination": "/team/:name*",
+      "permanent": true
+    },
+    {
+      "source": "/attorneys",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/attorneys/:name*",
+      "destination": "/team/:name*",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/practice-areas",
+      "permanent": true
+    },
+    {
+      "source": "/services/:name*",
+      "destination": "/practice-areas",
+      "permanent": true
+    },
     {
       "source": "/attorney/page/:page*",
       "destination": "/team",
@@ -18,19 +59,110 @@
     },
     {
       "source": "/author/:author*",
-      "destination": "/insights",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/insights/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/insights",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/team/brooke-badenhorst",
       "destination": "/team",
       "permanent": true
+    },
+    {
+      "source": "/team/alexandra-rakitzis-ho",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/popia",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/paia",
+      "destination": "/privacy?tab=paia",
+      "permanent": true
     }
   ],
   "rewrites": [
     {
+      "source": "/robots.txt",
+      "destination": "/api/robots"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://steinscop.sanity.studio"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(png|jpg|jpeg|webp|avif|svg|ico|mp4|webm|pdf|woff2)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }

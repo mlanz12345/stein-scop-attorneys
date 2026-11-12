@@ -1,19 +1,85 @@
+import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { Editable } from '../components/Editable';
 
 export default function CTA() {
-  return (
-    <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-primary">
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-      {/* Background video - Reset to original natural speed */}
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    if (!section || !video) return;
+
+    const startVideo = () => {
+      if (!video.getAttribute('src')) {
+        video.src = '/new.mp4';
+        video.load();
+      }
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+
+    const stopVideo = () => {
+      if (!video.paused) {
+        video.pause();
+      }
+    };
+
+    // Direct contentvisibilityautostatechange listener for browsers supporting content-visibility
+    const handleVisibilityChange = (event: Event) => {
+      const cvEvent = event as Event & { skipped?: boolean };
+      if (cvEvent.skipped) {
+        stopVideo();
+      } else {
+        startVideo();
+      }
+    };
+
+    section.addEventListener('contentvisibilityautostatechange', handleVisibilityChange);
+
+    // IntersectionObserver ensures lazy loading and playback pausing across all browsers
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startVideo();
+          } else {
+            stopVideo();
+          }
+        });
+      },
+      { rootMargin: '300px' }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      section.removeEventListener('contentvisibilityautostatechange', handleVisibilityChange);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      style={{
+        contentVisibility: 'auto',
+        containIntrinsicSize: 'auto none auto 80vh',
+      }}
+      className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-brand-primary"
+    >
+
+      {/* Background video — lazy-loaded when near viewport to avoid starving Hero HLS stream */}
       <video
-        src="/new.mp4"
-        autoPlay
+        ref={videoRef}
         loop
         muted
         playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
+        preload="none"
+        className="absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform"
       />
 
       {/* Dark overlay */}
@@ -36,14 +102,14 @@ export default function CTA() {
             <p className="text-lg md:text-xl text-brand-cream/80 font-light leading-relaxed">
               <Editable id="cta_desc" defaultText="Reach out to Stein Scop Attorneys Inc. for expert commercial counsel and superior litigation strategy." />
             </p>
-            <a
-              href="/contact"
-              className="inline-block px-12 py-6 bg-brand-accent text-white uppercase tracking-[3px] text-[10px] font-bold rounded-full hover:scale-105 active:scale-95 transition-all duration-500 shadow-2xl relative overflow-hidden group"
+            <Link
+              to="/contact"
+              className="btn inline-block px-12 py-6 bg-brand-accent text-white uppercase tracking-[3px] text-[10px] font-bold rounded-full hover:scale-105 active:scale-95 transition-all duration-500 shadow-2xl relative overflow-hidden group"
             >
               {/* Sliding glass reflection sheen effect on hover */}
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:animate-sheen pointer-events-none" />
               <span className="relative z-10">Contact Our Team</span>
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

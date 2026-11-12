@@ -53,3 +53,94 @@
   animation: kenBurns 28s ease-in-out infinite;
   will-change: transform;
 }
+
+/* ── Class-A Cartographic Telemetry Map Animations ── */
+@keyframes beamFlow {
+  0% {
+    stroke-dashoffset: 240;
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.25;
+  }
+}
+
+.arc-beam {
+  fill: none;
+  stroke: url(#arcGrad);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 45 195;
+  animation: beamFlow 3.8s linear infinite;
+  transition: stroke-width 0.3s ease, opacity 0.3s ease;
+}
+
+.arc-beam.active-arc {
+  stroke: #f0d5a3;
+  stroke-width: 2.8;
+  stroke-dasharray: none;
+  animation: none;
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(197, 166, 124, 0.85));
+}
+
+@keyframes sonarExpand {
+  0% {
+    transform: scale(0.25);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+.hq-sonar {
+  fill: none;
+  stroke: #c5a67c;
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sonarExpand 3.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.hq-sonar-delay {
+  animation-delay: 1.6s;
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    transform: scale(0.5);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.55;
+  }
+}
+
+.node-pulse {
+  fill: rgba(197, 166, 124, 0.25);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nodePulse 2.8s ease-in-out infinite;
+}
+
+@keyframes mapScanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(500%);
+  }
+}
+
+.map-scanline {
+  background: linear-gradient(to bottom, transparent, rgba(197, 166, 124, 0.06), transparent);
+  animation: mapScanline 9s linear infinite;
+}
+
