@@ -1,4 +1,4 @@
-import { Mail, Phone } from 'lucide-react';
+import { Linkedin, Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Editable } from '../components/Editable';
 
@@ -73,6 +73,18 @@ export default function Footer({ hideStatement = false }: FooterProps) {
                     className="hover:text-brand-accent transition-colors flex items-center gap-2">
                     <Mail size={12} />
                     <Editable id="footer_email" defaultText="info@steinscop.com" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/company/stein-scop-attorneys"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Stein Scop Attorneys on LinkedIn"
+                    className="hover:text-brand-accent transition-colors flex items-center gap-2"
+                  >
+                    <Linkedin size={12} />
+                    <span>LinkedIn</span>
                   </a>
                 </li>
               </ul>
