@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Mail, Phone } from 'lucide-react';
+import { Linkedin, Mail, Phone } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { allMembers } from '../data/team';
 import { getAttorneyBySlug, urlFor } from '../sanity';
@@ -52,6 +52,7 @@ export default function TeamMemberPage() {
         qualifications: liveAttorney?.qualifications ?? localMember.qualifications,
         bio: liveAttorney?.bio || localMember.bio,
         email: liveAttorney?.email || localMember.email,
+        linkedin: liveAttorney?.linkedinUrl || localMember.linkedin,
         practiceAreas: liveAttorney?.practiceAreas?.length ? liveAttorney.practiceAreas : localMember.practiceAreas,
         image: sanityCroppedUrl || liveAttorney?.imageUrl || localMember.image,
         imageAlt: liveAttorney?.imageAlt || `${liveAttorney?.name || localMember.name} - ${liveAttorney?.title || localMember.title}`,
@@ -65,6 +66,7 @@ export default function TeamMemberPage() {
         qualifications: liveAttorney.qualifications || '',
         bio: liveAttorney.bio || '',
         email: liveAttorney.email || 'info@steinscop.com',
+        linkedin: liveAttorney.linkedinUrl,
         practiceAreas: liveAttorney.practiceAreas || [],
         image: sanityCroppedUrl || liveAttorney.imageUrl || '/logo-new.png',
         imageAlt: liveAttorney.imageAlt || `${liveAttorney.name} - ${liveAttorney.title}`,
@@ -156,7 +158,7 @@ export default function TeamMemberPage() {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 text-sm text-white/45">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-6 text-sm text-white/45">
             <a href={`mailto:${member.email}?subject=${encodeURIComponent(`Attention: ${member.name} — Legal Enquiry`)}&body=${encodeURIComponent(`Dear ${member.name},\n\n`)}`}
               className="flex items-center gap-2 hover:text-white transition-colors">
               <Mail size={14} /> {member.email}
@@ -165,6 +167,17 @@ export default function TeamMemberPage() {
               className="flex items-center gap-2 hover:text-white transition-colors">
               <Phone size={14} /> +27 (0)11 380 80 80
             </a>
+            {member.linkedin && (
+              <a
+                href={member.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${member.name} on LinkedIn`}
+                className="flex items-center gap-2 hover:text-brand-accent transition-colors"
+              >
+                <Linkedin size={14} /> LinkedIn Profile
+              </a>
+            )}
           </div>
         </motion.div>
 

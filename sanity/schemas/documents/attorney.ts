@@ -50,6 +50,12 @@ export const attorney = defineType({
       initialValue: 'info@steinscop.com',
     }),
     defineField({
+      name: 'linkedinUrl',
+      title: 'LinkedIn Profile URL',
+      type: 'url',
+      description: 'Full LinkedIn profile URL (e.g. https://za.linkedin.com/in/...)',
+    }),
+    defineField({
       name: 'practiceAreas',
       title: 'Practice Areas',
       type: 'array',

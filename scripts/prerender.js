@@ -182,6 +182,11 @@ function buildAttorneyJsonLd(attorney, routeUrl) {
     };
   }
 
+  const linkedinProfile = attorney.linkedinUrl || attorney.linkedin;
+  if (linkedinProfile) {
+    schema.sameAs = [linkedinProfile];
+  }
+
   return JSON.stringify(schema);
 }
 

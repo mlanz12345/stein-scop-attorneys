@@ -39,6 +39,7 @@ export const directors: TeamMember[] = [
     bio: 'Sian completed her articles in 2016 at a large global law firm whereafter she was employed as an associate in the commercial litigation department. Sian has been involved in Stein Scop since its inception.\n\nSian specialises in commercial litigation and has been involved in numerous litigious corporate matters including large contractual disputes, telecommunications disputes, insolvency and business rescue, shareholder and director disputes and referrals to the competition commission and Tribunal and general company law matters. She has run large-scale commercial trials and motion proceedings in various South African High Courts and arbitrations forums.',
     image: '/sian-van-der-weele.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/sian-van-der-weele-68743aa8',
     practiceAreas: ['Commercial Litigation', 'Insolvency & Business Rescue', 'Shareholder Disputes', 'Competition Law', 'Arbitration'],
   },
   {
@@ -49,6 +50,7 @@ export const directors: TeamMember[] = [
     bio: 'She holds a Master’s Degree in Business and Commercial Law and specialises in commercial litigation, employment and labour law and administrative law. Her experience includes complex commercial disputes, High Court Litigation and Labour Court proceedings.\n\nShe provides strategic, commercially focused legal advice and representation across both contentious and advisory matters.',
     image: '/safiyyah.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/safiyyah-buckas',
     practiceAreas: ['Employment & Labour Law', 'Administrative Law'],
   },
   {
@@ -59,6 +61,7 @@ export const directors: TeamMember[] = [
     bio: 'Casper completed his articles in 2017 and thereafter practised as a commercial attorney at a firm based in Johannesburg. He has a Master’s Degree in International Commercial Law, which focused on cross-border transactions and disputes. He is employed in Stein Scop’s commercial department.\n\nCasper has been involved in many complex commercial matters and has advised on a broad range of legal disciplines including corporate governance, competition law, intellectual property and banking and finance. He is also experienced in High Court litigation as well as international commercial arbitrations.',
     image: '/casper-badenhorst.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/casper-badenhorst-89595b96',
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Governance'],
   },
   {
@@ -69,6 +72,7 @@ export const directors: TeamMember[] = [
     bio: 'Jemma is employed in the commercial department and is experienced in competition law (both from a compliance and regulatory perspective, as well as from a competition violation perspective), mergers and acquisitions, company law, white collar crime, and general regulatory compliance.',
     image: '/jemma-brasler.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/jemma-br%C3%A4sler-861456170',
     practiceAreas: ['Commercial Litigation', 'Competition Law & Regulatory Matters'],
   },
   {
@@ -79,6 +83,7 @@ export const directors: TeamMember[] = [
     bio: 'Simone began her legal career in 2015. After completing her articles, Simone practiced as an attorney in the Free State, gaining extensive experience in civil, commercial and criminal litigation in various South African High Courts. During 2021, Simone relocated to Gauteng to head her previous firm’s Gauteng branch. Simone practices in the commercial litigation department.',
     image: '/simone-meades.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/simone-meades-59255214b',
     practiceAreas: ['Commercial Litigation', 'Insolvency & Business Rescue'],
   },
   {
@@ -89,6 +94,7 @@ export const directors: TeamMember[] = [
     bio: 'Nanri specialises in complex, high-value corporate and commercial litigation matters including public administrative law challenges, procurement law disputes, corporate governance disputes, contractual disputes, mining and mineral law disputes, banking and financial services disputes, construction disputes, debt recovery and liquidation disputes.',
     image: '/nanri-labuschagne.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/nanri-labuschagne-b85a4b45',
     practiceAreas: ['Commercial Litigation', 'Administrative Law'],
   },
 ];
@@ -102,6 +108,7 @@ export const consultants: TeamMember[] = [
     bio: 'Amelia is an Employment and Labour attorney and CEDR Accredited Mediator. She specialises in Labour Court and Labour Appeal Court applications and trial work, with particular expertise in strike interdicts and review applications. She represents numerous clients across a number of industries and sectors including financial institutions, energy, infrastructure, mining and commodities, telecommunications, retail and private security. She provides her clients with strategic advice relating to unfair/automatically unfair dismissal disputes, sexual harassment disputes, poor performance management, terminations, retrenchments/restructuring, industrial relations, collective bargaining, recognition of majority unions, transfers and mergers as well as immigration law. She has extensive experience running arbitrations in the CCMA and in many bargaining councils and is particularly skilled at dispute resolution and negotiating/facilitating the settlement of disputes. Amelia’s expertise also includes drafting and reviewing permanent and fixed term employment contracts as well as contracts in respect of a-typical employees and independent contractors. Amelia obtained her Bachelor of Arts (majoring in Law and Industrial Psychology) and LLB degrees from the University of Witwatersrand and completed her articles at a large global law firm in 2010. She was admitted as an attorney of the High Court in April 2011 and practiced as an associate and senior associate at a large global law firm until she joined Stein Scop Attorneys Inc. as a director in 2016.',
     image: '/amelia-berman.png?v=2',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/amelia-berman-nee-hart-48323753',
     practiceAreas: ['Employment & Labour Law'],
   },
   {
@@ -122,6 +129,7 @@ export const consultants: TeamMember[] = [
     bio: 'Brooke completed her articles in 2021 at Stein Scop Attorneys Inc. and is a partner in the commercial department doing corporate mergers and acquisitions and general commercial work. Brooke has experience in cross-border M&A transactions, primarily in the banking, mining and energy sectors and advises domestic, regional and international clients on M&A deals, corporate law and general commercial matters.',
     image: '/brooke-roxburgh.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/brooke-roxburgh-5b7344134',
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial', 'Banking', 'Mining', 'Energy'],
   },
 ];
@@ -135,6 +143,7 @@ export const seniorAssociates: TeamMember[] = [
     bio: 'Liebet completed her articles in 2023 at Stein Scop where she is employed in the commercial department. Liebet has experience in company law and competition law matters, M&A transactions and the preparation and negotiation of general corporate and commercial contracts.',
     image: '/liebet-grobler.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://www.linkedin.com/in/liebet-g-375102433/',
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial'],
   },
   {
@@ -145,6 +154,7 @@ export const seniorAssociates: TeamMember[] = [
     bio: 'Lauren was admitted as an attorney in March 2022 and practices in the commercial litigation department. Lauren has acted in various high profile commercial litigation disputes and has experience in general commercial litigation, insolvency related matters and commercial arbitrations.',
     image: '/lauren-brabant.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://www.linkedin.com/in/lauren-brabant-ba1583161/',
     practiceAreas: ['Commercial Litigation', 'Insolvency & Business Rescue'],
   },
   {
@@ -155,6 +165,7 @@ export const seniorAssociates: TeamMember[] = [
     bio: 'Jacques completed his articles in 2023 at one of the large law firms and is employed in our commercial department. He assists the commercial team with corporate mergers and acquisitions and general commercial work. Jacques has had a wide variety of experience ranging from insolvency law and litigation through to commercial law and tax and exchange control.',
     image: '/jacques-erasmus.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/jacques-erasmus-9843a7157',
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial'],
   },
 ];
@@ -168,6 +179,7 @@ export const associates: TeamMember[] = [
     bio: 'Aaliyah commenced her articles in 2021 in the commercial department. Aaliyah has over five years of experience advising on complex commercial transactions, including mergers and acquisitions, private equity, and B-BBEE transactions.\n\nShe has acted for a diverse client base including listed entities, financial institutions, private equity funds, and international banks across sectors including logistics, financial services, mining, energy, pharmaceuticals, and retail. She is also experienced in commercial and general litigious matters, including High Court and Magistrates’ Court proceedings, mediation and settlement processes.\n\nAaliyah is also a Member of Young Arbitration Foundation of South Africa and is an International Association of Women Judges (IAWJ) Alumni Mentee, where she worked under and was mentored by Judge Fayeeza Kathree-Setiloane.',
     image: '/aaliyah-buksh.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://www.linkedin.com/in/aaliyah-buksh-49945919b/',
     practiceAreas: ['Mergers & Acquisitions', 'Corporate Commercial'],
   },
   {
@@ -178,6 +190,7 @@ export const associates: TeamMember[] = [
     bio: 'Jesse is an Associate within the firm’s Commercial Litigation Department. Jesse has experience in commercial litigation, labour law, municipal law, and general dispute resolution.',
     image: '/jesse-hanekom.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://www.linkedin.com/in/jesse-hanekom-290534182/',
     practiceAreas: ['Commercial Litigation'],
   },
   {
@@ -188,6 +201,7 @@ export const associates: TeamMember[] = [
     bio: 'Naledi completed her articles at Stein Scop and was admitted as an attorney in 2025. Naledi is employed in the commercial litigation department and has been involved in various matters including corporate commercial disputes, contractual claims and trial and motion proceedings. She has also been involved in labour and employment related matters.',
     image: '/naledi-lekena.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/naledi-lekena-a1518b19b',
     practiceAreas: ['Commercial Litigation'],
   },
   {
@@ -198,6 +212,7 @@ export const associates: TeamMember[] = [
     bio: 'Marco joined Stein Scop in 2026 and is employed in the commercial litigation department. Marco has a Master of Laws degree in Public Law, specialising in administrative law and constitutional law. He has extensive research and advisory experience, working as a law researcher at the Constitutional Court and at the Supreme Court of Appeal. He began his legal career in 2019 at a commercial law firm in Cape Town, gaining experience in general commercial litigation.',
     image: '/marco-vieira.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/marco-vieira-2a5305132',
     practiceAreas: ['Commercial Litigation'],
   },
   {
@@ -208,6 +223,7 @@ export const associates: TeamMember[] = [
     bio: 'Alon was admitted as an attorney in September 2024 and practices in the commercial litigation department. Alon has experience in general commercial work, contractual disputes, and commercial litigation matters.',
     image: '/alon-katz.png?v=2',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/alon-katz96',
     practiceAreas: ['Commercial Litigation'],
   },
   {
@@ -218,6 +234,7 @@ export const associates: TeamMember[] = [
     bio: 'Danita is an Associate in the firm’s Litigation Department. She has experience in a range of commercial litigation matters, including corporate and commercial disputes, contractual claims and regulatory disputes. Danita has assisted financial institutions, mining companies and regulatory bodies in complex, high-value and novel litigation matters.',
     image: '/danita-mungaroo.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/danita-mungaroo-4a285a218',
     practiceAreas: ['Commercial Litigation'],
   },
 ];
@@ -231,6 +248,7 @@ export const candidateAttorneys: TeamMember[] = [
     bio: 'Keagan is a Candidate Attorney completing his articles at Stein Scop. He works across the firm\'s commercial, litigation, and corporate practice areas, gaining broad exposure to complex, director-led mandates. His enthusiasm and commitment to legal excellence reflect the firm\'s values from the outset of his professional career.',
     image: '/keagan-devonport.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/keagan-devonport-3b10b685',
     practiceAreas: [],
   },
   {
@@ -241,6 +259,7 @@ export const candidateAttorneys: TeamMember[] = [
     bio: 'Javahl is a Candidate Attorney whose articles expose him to the full breadth of the firm\'s commercial and litigation practice. He assists directors and senior associates on a range of matters, developing the analytical rigour and commercial judgment that define the Stein Scop standard. Javahl brings a sharp mind and a strong work ethic to every instruction he receives.',
     image: '/javahl-balia.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://za.linkedin.com/in/javahl-balia-383283238',
     practiceAreas: [],
   },
   {
@@ -251,6 +270,7 @@ export const candidateAttorneys: TeamMember[] = [
     bio: 'Yola is a Candidate Attorney completing her articles at the firm. She is gaining comprehensive exposure to Stein Scop\'s commercial, employment, and litigation practices, working directly alongside directors and senior associates. Yola combines intellectual curiosity with a disciplined approach to legal work, and has quickly established herself as a valued member of the team.',
     image: '/yola-elefu.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://www.linkedin.com/in/yola-elefu-2a37b3300/',
     practiceAreas: [],
   },
   {
@@ -261,6 +281,7 @@ export const candidateAttorneys: TeamMember[] = [
     bio: 'Nikita is a Candidate Attorney whose articles at Stein Scop provide exposure to complex director-led mandates across commercial law, corporate transactions, and dispute resolution. She brings diligence, precision, and a genuine commitment to client service to all aspects of her work, embodying the firm\'s standards from the earliest stage of her legal career.',
     image: '/nikita-rama.png',
     email: 'info@steinscop.com',
+    linkedin: 'https://www.linkedin.com/in/nikita-rama-508a74293/',
     practiceAreas: [],
   },
 ];
