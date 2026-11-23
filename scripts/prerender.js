@@ -148,7 +148,9 @@ function buildBreadcrumbJsonLd(route, attorney) {
 function buildAttorneyJsonLd(attorney, routeUrl) {
   if (!attorney) return null;
   let portraitUrl = `${baseUrl}/logo-new.png`;
-  if (attorney.image?.asset) {
+  if (attorney.profileImage?.asset) {
+    portraitUrl = builder.image(attorney.profileImage).width(1600).auto('format').url();
+  } else if (attorney.image?.asset) {
     portraitUrl = builder.image(attorney.image).width(800).height(1000).fit('crop').auto('format').url();
   } else if (typeof attorney.image === 'string' && attorney.image) {
     portraitUrl = attorney.image.startsWith('http') ? attorney.image : `${baseUrl}${attorney.image}`;

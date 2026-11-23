@@ -14,22 +14,40 @@ const MemberCard = React.memo(function MemberCard({ member, index }: { member: T
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ delay: (index % 4) * 0.05, duration: 0.45, ease: 'easeOut' }}
-      className="group flex flex-col p-4 rounded-2xl border border-transparent hover:border-brand-accent/20 hover:bg-brand-cream/30 transition-[background-color,border-color,box-shadow] duration-300 shadow-sm hover:shadow-md"
+      className="group flex flex-col p-3 rounded-2xl hover:bg-brand-cream/40 transition-colors duration-300"
     >
       {/* ── Photo ──────────────────────────────── */}
       <Link
         to={`/team/${member.id}`}
-        className="team-member block relative aspect-[3/4] overflow-hidden mb-4 bg-white rounded-lg border border-brand-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.03)] group-hover:border-brand-accent/40 group-hover:shadow-md transition-[border-color,box-shadow] duration-300"
+        className="team-member block relative aspect-[3/4] overflow-hidden mb-4 rounded-lg"
         data-member-name={member.name}
         data-member-role={member.title}
       >
-        <img
-          src={member.image}
-          alt={`${member.name} - ${member.title}`}
-          loading={index < 4 ? 'eager' : 'lazy'}
-          decoding="async"
-          className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-        />
+        {member.hasNewPortrait ? (
+          <img
+            src={member.image}
+            alt={`${member.name} - ${member.title}`}
+            loading={index < 4 ? 'eager' : 'lazy'}
+            decoding="async"
+            className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <div
+            className="w-full h-full flex flex-col items-center justify-center relative select-none group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+            style={{ background: 'radial-gradient(circle at 50% 40%, #8a7e68 0%, #6f6450 100%)' }}
+          >
+            <img
+              src="/stein-scop-knight-watermark.png"
+              alt={`${member.name} - Stein Scop Attorneys`}
+              loading={index < 4 ? 'eager' : 'lazy'}
+              decoding="async"
+              className="w-20 h-auto opacity-[0.22] brightness-[2.2] contrast-[0.9]"
+            />
+            <span className="absolute bottom-3.5 text-[9px] uppercase tracking-[0.28em] font-semibold text-white/45">
+              Stein Scop Attorneys
+            </span>
+          </div>
+        )}
 
         {/* Hover overlay */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-brand-primary/60 via-transparent to-transparent flex items-end p-4 rounded-lg">
@@ -143,7 +161,7 @@ export default function TeamPage() {
       list.map((m) => {
         const live = sanityMap[m.id];
         if (!live) return m;
-        const sanityCroppedUrl = live.image ? urlFor(live.image)?.auto('format').quality(90).url() : null;
+        const sanityCroppedUrl = live.image ? urlFor(live.image)?.width(800).auto('format').quality(85).url() : null;
         return {
           ...m,
           name: live.name || m.name,
@@ -151,6 +169,7 @@ export default function TeamPage() {
           qualifications: live.qualifications ?? m.qualifications,
           practiceAreas: live.practiceAreas?.length ? live.practiceAreas : m.practiceAreas,
           image: sanityCroppedUrl || live.imageUrl || m.image,
+          hasNewPortrait: typeof live.hasNewPortrait === 'boolean' ? live.hasNewPortrait : m.hasNewPortrait,
         };
       });
 

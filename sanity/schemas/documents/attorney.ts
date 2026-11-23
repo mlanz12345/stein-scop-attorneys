@@ -71,7 +71,7 @@ export const attorney = defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Portrait Photo',
+      title: 'Card Portrait Photo (3:4 Crop)',
       type: 'image',
       options: {
         hotspot: true,
@@ -84,7 +84,30 @@ export const attorney = defineType({
           description: 'e.g. "Glenn Stein — Co-Founding Director at Stein Scop Attorneys Sandton"',
         }),
       ],
-      description: 'Studio monochrome portrait on white background',
+      description: '3:4 cropped portrait shown on the Our Team grid cards',
+    }),
+    defineField({
+      name: 'profileImage',
+      title: 'Profile Hero Photo (High-Res Landscape)',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Hero Portrait Alt Text',
+          type: 'string',
+        }),
+      ],
+      description: 'Full-bleed high-resolution portrait shown on the individual attorney profile page',
+    }),
+    defineField({
+      name: 'hasNewPortrait',
+      title: 'New Studio Portrait Active',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Turn ON once new studio portraits are uploaded; when OFF, displays the Stein Scop watermark placeholder',
     }),
     defineField({
       name: 'order',

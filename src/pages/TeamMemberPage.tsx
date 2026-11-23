@@ -41,7 +41,10 @@ export default function TeamMemberPage() {
   }, [id]);
 
   const sanityCroppedUrl = liveAttorney?.image
-    ? urlFor(liveAttorney.image)?.auto('format').quality(90).url()
+    ? urlFor(liveAttorney.image)?.width(800).auto('format').quality(85).url()
+    : null;
+  const sanityHeroUrl = liveAttorney?.profileImage
+    ? urlFor(liveAttorney.profileImage)?.width(1600).auto('format').quality(85).url()
     : null;
 
   const member = localMember
@@ -54,8 +57,9 @@ export default function TeamMemberPage() {
         email: liveAttorney?.email || localMember.email,
         linkedin: liveAttorney?.linkedinUrl || localMember.linkedin,
         practiceAreas: liveAttorney?.practiceAreas?.length ? liveAttorney.practiceAreas : localMember.practiceAreas,
-        image: sanityCroppedUrl || liveAttorney?.imageUrl || localMember.image,
-        imageAlt: liveAttorney?.imageAlt || `${liveAttorney?.name || localMember.name} - ${liveAttorney?.title || localMember.title}`,
+        image: sanityHeroUrl || liveAttorney?.profileImageUrl || localMember.profileImage || sanityCroppedUrl || liveAttorney?.imageUrl || localMember.image,
+        hasNewPortrait: typeof liveAttorney?.hasNewPortrait === 'boolean' ? liveAttorney.hasNewPortrait : Boolean(localMember.hasNewPortrait),
+        imageAlt: liveAttorney?.profileImageAlt || liveAttorney?.imageAlt || `${liveAttorney?.name || localMember.name} - ${liveAttorney?.title || localMember.title}`,
         seo: liveAttorney?.seo,
       }
     : liveAttorney
@@ -68,8 +72,9 @@ export default function TeamMemberPage() {
         email: liveAttorney.email || 'info@steinscop.com',
         linkedin: liveAttorney.linkedinUrl,
         practiceAreas: liveAttorney.practiceAreas || [],
-        image: sanityCroppedUrl || liveAttorney.imageUrl || '/logo-new.png',
-        imageAlt: liveAttorney.imageAlt || `${liveAttorney.name} - ${liveAttorney.title}`,
+        image: sanityHeroUrl || liveAttorney.profileImageUrl || sanityCroppedUrl || liveAttorney.imageUrl || '/logo-new.png',
+        hasNewPortrait: Boolean(liveAttorney.hasNewPortrait),
+        imageAlt: liveAttorney.profileImageAlt || liveAttorney.imageAlt || `${liveAttorney.name} - ${liveAttorney.title}`,
         seo: liveAttorney.seo,
       }
     : null;
@@ -186,14 +191,32 @@ export default function TeamMemberPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full md:w-1/2 relative min-h-[420px] bg-white flex items-center justify-center p-6 md:p-10 overflow-hidden border-t md:border-t-0 md:border-l border-white/10"
+          className="w-full md:w-1/2 relative min-h-[420px] overflow-hidden border-t md:border-t-0 md:border-l border-white/10"
         >
-          <img
-            src={member.image}
-            alt={member.imageAlt}
-            decoding="async"
-            className="w-full h-full max-h-[500px] object-contain object-bottom"
-          />
+          {member.hasNewPortrait ? (
+            <img
+              src={member.image}
+              alt={member.imageAlt}
+              decoding="async"
+              className="w-full h-full object-cover object-[center_20%]"
+            />
+          ) : (
+            <div
+              className="w-full h-full min-h-[420px] flex flex-col items-center justify-center relative select-none"
+              style={{ background: 'radial-gradient(circle at 50% 45%, #8a7e68 0%, #6f6450 100%)' }}
+            >
+              <div className="absolute inset-7 border border-brand-accent/25 pointer-events-none" />
+              <img
+                src="/stein-scop-knight-watermark.png"
+                alt={`${member.name} - Stein Scop Attorneys`}
+                decoding="async"
+                className="w-28 h-auto opacity-[0.24] brightness-[2.2] contrast-[0.9]"
+              />
+              <span className="mt-5 text-[10px] uppercase tracking-[0.35em] font-semibold text-white/50">
+                Stein Scop Attorneys
+              </span>
+            </div>
+          )}
         </motion.div>
       </section>
 
