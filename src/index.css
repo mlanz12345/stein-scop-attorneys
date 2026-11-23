@@ -188,7 +188,7 @@
 }
 
 .ss-knight-spin {
-  animation: ssKnightSpin 8s linear infinite;
+  animation: ssKnightSpin 16s linear infinite;
   transform-style: preserve-3d;
 }
 
