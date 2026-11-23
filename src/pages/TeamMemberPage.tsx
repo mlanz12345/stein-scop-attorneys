@@ -136,13 +136,13 @@ export default function TeamMemberPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center relative z-10"
+          className="w-full md:w-1/2 min-w-0 p-8 sm:p-10 md:p-12 lg:p-16 xl:p-24 flex flex-col justify-center relative z-10"
         >
           <p className="text-brand-accent text-xs tracking-[0.3em] font-semibold uppercase mb-4">
             {member.title}
           </p>
 
-          <h1 className="text-5xl md:text-7xl font-serif text-white leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-[2.5rem] lg:text-6xl xl:text-7xl font-serif text-white leading-tight mb-6 break-words">
             {member.name}
           </h1>
 
@@ -191,7 +191,11 @@ export default function TeamMemberPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full md:w-1/2 relative min-h-[420px] overflow-hidden border-t md:border-t-0 md:border-l border-white/10"
+          className={`w-full md:w-1/2 relative overflow-hidden border-t md:border-t-0 md:border-l border-white/10 ${
+            member.hasNewPortrait
+              ? 'aspect-[3/2] md:aspect-auto md:min-h-[520px]'
+              : 'min-h-[360px] md:min-h-[520px]'
+          }`}
         >
           {member.hasNewPortrait ? (
             <img
@@ -202,7 +206,7 @@ export default function TeamMemberPage() {
             />
           ) : (
             <div
-              className="w-full h-full min-h-[420px] flex flex-col items-center justify-center relative select-none"
+              className="w-full h-full min-h-[360px] md:min-h-[520px] flex flex-col items-center justify-center relative select-none"
               style={{ background: 'radial-gradient(circle at 50% 45%, #8a7e68 0%, #6f6450 100%)' }}
             >
               <div className="absolute inset-7 border border-brand-accent/25 pointer-events-none" />

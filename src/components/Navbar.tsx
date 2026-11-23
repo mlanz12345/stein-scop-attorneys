@@ -57,7 +57,11 @@ export default function Navbar() {
     <motion.nav
       animate={{
         height: isScrolled ? 72 : 100,
-        backgroundColor: isScrolled ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0)',
+        backgroundColor: isScrolled
+          ? 'rgba(255,255,255,1)'
+          : isDarkPage
+            ? 'rgba(255,255,255,0)'
+            : 'rgba(255,255,255,0.96)',
         borderColor: isScrolled
           ? 'rgba(226,232,240,1)'
           : isDarkPage
