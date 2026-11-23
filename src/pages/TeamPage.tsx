@@ -33,7 +33,7 @@ const MemberCard = React.memo(function MemberCard({ member, index }: { member: T
           />
         ) : (
           <div
-            className="w-full h-full flex flex-col items-center justify-center relative select-none group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+            className="ss-watermark-stage w-full h-full flex flex-col items-center justify-center relative select-none group-hover:scale-[1.02] transition-transform duration-500 ease-out"
             style={{ background: 'radial-gradient(circle at 50% 40%, #8a7e68 0%, #6f6450 100%)' }}
           >
             <img
@@ -41,10 +41,10 @@ const MemberCard = React.memo(function MemberCard({ member, index }: { member: T
               alt={`${member.name} - Stein Scop Attorneys`}
               loading={index < 4 ? 'eager' : 'lazy'}
               decoding="async"
-              className="w-20 h-auto opacity-[0.22] brightness-[2.2] contrast-[0.9]"
+              className="ss-knight-spin w-20 h-auto opacity-[0.24] brightness-[2.2] contrast-[0.9]"
             />
-            <span className="absolute bottom-3.5 text-[9px] uppercase tracking-[0.28em] font-semibold text-white/45">
-              Stein Scop Attorneys
+            <span className="absolute bottom-3.5 text-[9px] uppercase tracking-[0.24em] font-semibold text-white/50">
+              Portrait Forthcoming
             </span>
           </div>
         )}

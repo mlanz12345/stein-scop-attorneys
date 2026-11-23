@@ -144,3 +144,68 @@
   animation: mapScanline 9s linear infinite;
 }
 
+/* Portrait Watermark Placeholders */
+@keyframes ssKnightSpin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes ssSheenSweep {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(180%) skewX(-20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(180%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ssKnightBreath {
+  0%, 100% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.32;
+    transform: scale(1.02);
+  }
+}
+
+.ss-watermark-stage {
+  perspective: 700px;
+}
+
+.ss-knight-spin {
+  animation: ssKnightSpin 8s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.ss-sheen-sweep {
+  background: linear-gradient(90deg, transparent 0%, rgba(197, 160, 89, 0.16) 50%, transparent 100%);
+  animation: ssSheenSweep 5.5s ease-in-out infinite;
+}
+
+.ss-knight-breath {
+  animation: ssKnightBreath 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-knight-spin,
+  .ss-sheen-sweep,
+  .ss-knight-breath {
+    animation: none;
+  }
+}
+

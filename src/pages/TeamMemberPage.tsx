@@ -206,18 +206,19 @@ export default function TeamMemberPage() {
             />
           ) : (
             <div
-              className="w-full h-full min-h-[360px] md:min-h-[520px] flex flex-col items-center justify-center relative select-none"
+              className="w-full h-full min-h-[360px] md:min-h-[520px] flex flex-col items-center justify-center relative overflow-hidden px-6 select-none"
               style={{ background: 'radial-gradient(circle at 50% 45%, #8a7e68 0%, #6f6450 100%)' }}
             >
+              <div className="ss-sheen-sweep absolute inset-0 w-[55%] pointer-events-none" />
               <div className="absolute inset-7 border border-brand-accent/25 pointer-events-none" />
               <img
                 src="/stein-scop-knight-watermark.png"
                 alt={`${member.name} - Stein Scop Attorneys`}
                 decoding="async"
-                className="w-28 h-auto opacity-[0.24] brightness-[2.2] contrast-[0.9]"
+                className="ss-knight-breath w-28 h-auto opacity-[0.24] brightness-[2.2] contrast-[0.9] relative z-10"
               />
-              <span className="mt-5 text-[10px] uppercase tracking-[0.35em] font-semibold text-white/50">
-                Stein Scop Attorneys
+              <span className="mt-5 text-center text-[10px] uppercase tracking-[0.28em] font-semibold text-white/55 relative z-10">
+                {member.name.split(' ')[0]}’s Updated Portrait Forthcoming
               </span>
             </div>
           )}
