@@ -893,14 +893,31 @@ export default function ContactPage() {
               >
                 <Link
                   to={`/team/${d.id}`}
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-brand-cream border border-brand-border shrink-0"
+                  className="ss-watermark-stage w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shrink-0 flex items-center justify-center"
+                  style={
+                    d.hasNewPortrait
+                      ? undefined
+                      : { background: 'radial-gradient(circle at 50% 40%, #8a7e68 0%, #6f6450 100%)' }
+                  }
                 >
-                  <img
-                    src={d.image}
-                    alt={d.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {d.hasNewPortrait ? (
+                    <img
+                      src={d.image}
+                      alt={d.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <img
+                      src="/stein-scop-knight-watermark.png"
+                      alt={`${d.name} - Stein Scop Attorneys`}
+                      loading="lazy"
+                      decoding="async"
+                      width={161}
+                      height={260}
+                      className="ss-knight-spin w-5 sm:w-6 h-auto opacity-[0.3]"
+                    />
+                  )}
                 </Link>
                 <div className="min-w-0 flex-1 space-y-1">
                   <Link
