@@ -41,7 +41,9 @@ const MemberCard = React.memo(function MemberCard({ member, index }: { member: T
               alt={`${member.name} - Stein Scop Attorneys`}
               loading={index < 4 ? 'eager' : 'lazy'}
               decoding="async"
-              className="ss-knight-spin w-20 h-auto opacity-[0.24] brightness-[2.2] contrast-[0.9]"
+              width={161}
+              height={260}
+              className="ss-knight-spin w-20 h-auto opacity-[0.28]"
             />
             <span className="absolute bottom-3.5 text-[9px] uppercase tracking-[0.24em] font-semibold text-white/50">
               Portrait Forthcoming

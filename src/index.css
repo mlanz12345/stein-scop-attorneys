@@ -185,20 +185,23 @@
 
 .ss-watermark-stage {
   perspective: 700px;
+  contain: layout paint;
 }
 
 .ss-knight-spin {
   animation: ssKnightSpin 16s linear infinite;
-  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .ss-sheen-sweep {
   background: linear-gradient(90deg, transparent 0%, rgba(197, 160, 89, 0.16) 50%, transparent 100%);
   animation: ssSheenSweep 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .ss-knight-breath {
   animation: ssKnightBreath 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
