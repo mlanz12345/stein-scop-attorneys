@@ -166,9 +166,13 @@ export default function SilkWaveBackground({ className = '' }: SilkWaveBackgroun
     drawFrame(performance.now());
     animationFrameId = window.requestAnimationFrame(tick);
 
+    let resizeRafId = 0;
     const resizeObserver = new ResizeObserver(() => {
-      updateSize();
-      drawFrame(performance.now());
+      if (resizeRafId) window.cancelAnimationFrame(resizeRafId);
+      resizeRafId = window.requestAnimationFrame(() => {
+        updateSize();
+        drawFrame(performance.now());
+      });
     });
     resizeObserver.observe(container);
     window.addEventListener('resize', updateSize, { passive: true });
@@ -192,6 +196,7 @@ export default function SilkWaveBackground({ className = '' }: SilkWaveBackgroun
 
     return () => {
       window.cancelAnimationFrame(animationFrameId);
+      if (resizeRafId) window.cancelAnimationFrame(resizeRafId);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       window.removeEventListener('resize', updateSize);

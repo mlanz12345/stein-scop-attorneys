@@ -6,6 +6,22 @@ import { Analytics } from '@vercel/analytics/react';
 import App from './App.tsx';
 import './index.css';
 
+// Suppress benign browser ResizeObserver loop notifications from triggering Clarity/telemetry errors
+if (typeof window !== 'undefined') {
+  window.addEventListener(
+    'error',
+    (event) => {
+      if (
+        event.message === 'ResizeObserver loop completed with undelivered notifications.' ||
+        event.message === 'ResizeObserver loop limit exceeded'
+      ) {
+        event.stopImmediatePropagation();
+      }
+    },
+    true
+  );
+}
+
 function ConsentAwareTelemetry() {
   const [allowAnalytics, setAllowAnalytics] = useState<boolean>(() => {
     try {
